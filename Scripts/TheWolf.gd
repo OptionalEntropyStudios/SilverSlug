@@ -11,8 +11,13 @@ var isRunningAway : bool = false
 var stateMachine
 @onready var playerHeadPos = $PlayerHeadPos #The position we want the player's head to be in, when attacked
 @onready var playerCollision = $PlayerHeadPos/playerCollision
-@onready var wolfHitSFX = $WolfHitSound
+
+#Sound Effects
+@onready var wolfHitSound = $WolfHitSound
 @onready var wolfFootstep = $FootSteps
+@onready var howlSound = $WolfHowl
+@onready var howlSprintBark = $WolfSprintBark
+@onready var stalkGrowl = $WolfStalking
 
 
 #FOOTSTEPS 
@@ -56,9 +61,16 @@ func _process(delta):
 			"WolfStalking":
 				moveSpeed = stalkSpeed
 				footstepInterval = stalkInterval
+				if(!stalkGrowl.playing):
+					stopAllSounds()
+					stalkGrowl.play()
 			"WolfSprinting":
 				moveSpeed = sprintSpeed
 				footstepInterval = sprintInterval
+				if(!isRunningAway):
+					if(!howlSprintBark.playing):
+						stopAllSounds()
+						howlSprintBark.play()
 			"WolfFirstAttack":
 				moveSpeed = 0
 			"WolfSecondAttack":
@@ -121,9 +133,7 @@ func _on_player_player_running(): #Called when the player is running
 			#If the player runs too much in a certain time, trigger spawning
 
 func _on_arm_gun_readied(): #Called if the player is readying their gun
-	if(isDormant):
-		startApproaching()
-	elif(stateMachine.get_current_node() == "WolfIntoCrouch"):
+	if(stateMachine.get_current_node() == "WolfIntoCrouch"):
 		animTree.set("parameters/conditions/isStalking", true)
 	if (stateMachine.get_current_node() == "WolfStalking"): #If wolf is stalking toward player,
 		animTree.set("parameters/conditions/isSprinting", true) #Start sprinting at them
@@ -131,7 +141,6 @@ func _on_arm_gun_readied(): #Called if the player is readying their gun
 
 func _on_animation_tree_animation_finished(anim_name):
 	if(anim_name == "WolfFirstAttack"):
-		print("I'm done monching you")
 		attackFinished.emit()
 		var forwardTeleportLocation = playerCollision.global_position#We gotta teleport like 2 meters forward, so
 		global_position = forwardTeleportLocation #So we just gonna teleport to where the player pos was
@@ -147,13 +156,11 @@ func _on_animation_tree_animation_finished(anim_name):
 		animTree.set("parameters/conditions/isSprinting", false)
 		ableToLook = true
 		isRunningAway = true
-		print("Your slugs are no match for me >:3")
 	if(anim_name == "WolfSecondAttack"):
 		get_tree().quit(0) #THIS NEEDS TO BE CHANGED
 func getShot(): #Called, when the shot hits the wolf
-	print("wolf Got shot")
-	wolfHitSFX.play()
-	ableToLook = false #The wolf can't poiint towards the player, if it's getting up
+	wolfHitSound.play()
+	ableToLook = false #The wolf can't point towards the player, if it's getting up
 	canAttack = false
 	animTree.set("parameters/conditions/isHit", true) #Trigger the get shot animations
 	animTree.set("parameters/conditions/gotUp", false) #Set the got up animation trigger to false, so it doesn't just loop endlessly
@@ -196,6 +203,7 @@ func setAllConditionsToFalse():
 
 func onVisibleOnScreen():
 	if(isDormant):
+		howlSound.play()
 		startApproaching()
 	if(stateMachine.get_current_node() == "WolfIntoCrouch"):
 		print("You see me baeeeee. Am coming for ya haha")
@@ -234,3 +242,9 @@ func onPlayerRanTooLong():
 	elif(stateMachine.get_current_node() == "WolfIntoCrouch"):
 		print("You have run too much, B :3")
 		animTree.set("parameters/conditions/isStalking", true)
+
+func stopAllSounds():
+	wolfHitSound.stop()
+	howlSound.stop()
+	howlSprintBark.stop()
+	stalkGrowl.stop()
