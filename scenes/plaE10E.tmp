@@ -1,0 +1,175 @@
+[gd_scene load_steps=16 format=3 uid="uid://0556jvisllh6"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_3660p"]
+[ext_resource type="Script" path="res://scenes/Gun.gd" id="2_gb2un"]
+[ext_resource type="PackedScene" uid="uid://bhmynibpjkel8" path="res://scenes/shotgun.tscn" id="2_tk2k1"]
+[ext_resource type="PackedScene" uid="uid://b24amrorrafh7" path="res://Models/arm_L.glb" id="4_lbgko"]
+[ext_resource type="PackedScene" uid="uid://bo8y332k7wh48" path="res://Models/arm_R.glb" id="5_fjyvi"]
+[ext_resource type="Texture2D" uid="uid://db4tdpvjgpwv3" path="res://Textures/xhair_hand_interact.png" id="6_0is5s"]
+[ext_resource type="Texture2D" uid="uid://dwkpii13g7cnd" path="res://Textures/xhair_hand_pickup.png" id="7_t1b5p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w6ifr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtwwk"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.641934, 0.641934, 0.641934, 1)
+metallic_specular = 0.0
+disable_receive_shadows = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_ysy8r"]
+max_value = 3.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 3), 4.17756, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_87ap6"]
+curve = SubResource("Curve_ysy8r")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3p5s2"]
+lifetime_randomness = 0.83
+particle_flag_damping_as_friction = true
+angle_min = -720.0
+angle_max = -89.7
+spread = 23.238
+initial_velocity_min = 25.0
+initial_velocity_max = 45.0
+angular_velocity_min = -417.39
+angular_velocity_max = 219.13
+gravity = Vector3(0, 0, 0)
+damping_min = 1.499
+damping_max = 26.861
+scale_min = 0.01
+scale_max = 0.06
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_87ap6")
+anim_speed_min = 1.86
+anim_speed_max = 8.0
+turbulence_noise_strength = 0.38
+turbulence_noise_scale = 4.819
+turbulence_influence_min = 0.038
+
+[sub_resource type="QuadMesh" id="QuadMesh_gfpl2"]
+
+[sub_resource type="FontVariation" id="FontVariation_c38q1"]
+variation_embolden = 0.38
+variation_transform = Transform2D(1.415, 0.14, -0.615, 2.25, 0, -0.23)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m5f3y"]
+font = SubResource("FontVariation_c38q1")
+font_size = 36
+font_color = Color(1, 0.176824, 0.857978, 0.647059)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_3660p")
+
+[node name="Body" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_w6ifr")
+
+[node name="Head" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+fov = 60.0
+near = 0.001
+
+[node name="Arm" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.87855, 0.47765, 0, -0.47765, 0.87855, 0.116, -0.412798, -0.0179862)
+script = ExtResource("2_gb2un")
+
+[node name="shotgun" parent="Head/Arm" instance=ExtResource("2_tk2k1")]
+transform = Transform3D(-0.24, 5.03307e-15, 3.6239e-08, 7.10543e-15, 0.24, 3.72529e-08, -3.6239e-08, 3.72529e-08, -0.24, 0, 0.278327, -0.511932)
+
+[node name="ShootRay" type="RayCast3D" parent="Head/Arm/shotgun"]
+transform = Transform3D(-2, 5.68434e-14, -3.01992e-07, 5.83896e-14, 2, 2.38419e-07, 3.01992e-07, 2.38419e-07, -2, -0.000652134, 0.315742, 2.41824)
+target_position = Vector3(0, 0, -15)
+debug_shape_custom_color = Color(1, 0, 0, 0.52549)
+debug_shape_thickness = 1
+
+[node name="arm_L" parent="Head/Arm/shotgun" instance=ExtResource("4_lbgko")]
+transform = Transform3D(1, 7.10543e-15, -7.10543e-15, 2.13163e-14, 1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0)
+
+[node name="arm_R" parent="Head/Arm/shotgun" instance=ExtResource("5_fjyvi")]
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="Head/Arm/shotgun"]
+transform = Transform3D(4.16667, 0, -4.54747e-13, 0, 4.16667, 1.54972e-06, 6.82121e-13, -1.54972e-06, 4.16667, 8.64267e-07, 0.315111, 3.04914)
+light_color = Color(1, 1, 0, 1)
+light_energy = 5.04
+omni_range = 2.067
+
+[node name="PoofEffect" type="GPUParticles3D" parent="Head/Arm/shotgun"]
+transform = Transform3D(-4.37113e-08, 0.477157, -0.878814, 0, 0.878814, 0.477157, 0.999998, 2.98023e-08, -7.45058e-08, 5.06639e-07, 0.29003, 4.10024)
+material_override = SubResource("StandardMaterial3D_vtwwk")
+emitting = false
+amount = 75
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-1.89014, -4, -4, 8, 8, 8)
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_3p5s2")
+draw_pass_1 = SubResource("QuadMesh_gfpl2")
+
+[node name="HolsteredPosition" type="Node3D" parent="Head"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, -0.707164, 0)
+
+[node name="InteractRay" type="RayCast3D" parent="Head"]
+transform = Transform3D(0.878092, -0.478493, 0, 0.478493, 0.878092, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -1.75)
+
+[node name="GunClipCheckRay" type="RayCast3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.892358, 0.451329, 0, -0.451329, 0.892358, 0.10438, -0.0347722, -0.0321964)
+target_position = Vector3(0, 0, -1.275)
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="XhairHandInteract" type="Sprite2D" parent="CanvasLayer/Crosshair"]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(6, 40)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_0is5s")
+
+[node name="XhairHandPickup" type="Sprite2D" parent="CanvasLayer/Crosshair"]
+visible = false
+texture_filter = 1
+position = Vector2(0, 28)
+rotation = 0.530294
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_t1b5p")
+
+[node name="AmmoText" type="Label" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -126.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "X / X"
+label_settings = SubResource("LabelSettings_m5f3y")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

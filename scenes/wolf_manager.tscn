@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://t34ma74lqu6f"]
+
+[ext_resource type="Script" path="res://Scripts/WolfManager.gd" id="1_pjvn7"]
+
+[node name="WolfManager" type="Node"]
+script = ExtResource("1_pjvn7")

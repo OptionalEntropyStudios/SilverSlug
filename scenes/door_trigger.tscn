@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://lyiytg6i1v85"]
+
+[ext_resource type="Script" path="res://Scripts/door_trigger.gd" id="1_66j7l"]
+[ext_resource type="AudioStream" uid="uid://cwd8ehym57blk" path="res://SFX/door.wav" id="2_7o6jn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vhdpy"]
+size = Vector3(0.228363, 0.35376, 0.0495664)
+
+[node name="DoorTrigger" type="StaticBody3D" groups=["interactable"]]
+script = ExtResource("1_66j7l")
+
+[node name="DoorCollider2" type="CollisionShape3D" parent="."]
+transform = Transform3D(6.25, 0, 0, 0, 6.25, 0, 0, 0, 6.25, 0, 1.11, 0)
+shape = SubResource("BoxShape3D_vhdpy")
+
+[node name="doorOpenSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7o6jn")

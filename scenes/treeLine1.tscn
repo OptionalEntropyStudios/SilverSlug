@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceo6fcu01tnx1"]
+
+[ext_resource type="Texture2D" uid="uid://bltd815m0jxm1" path="res://Textures/treeLineBackGround.png" id="1_wftka"]
+[ext_resource type="Texture2D" uid="uid://c76wtno0x5mul" path="res://Textures/treeLineBackGround2.png" id="2_xw0jw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wx3p1"]
+size = Vector3(15.5049, 5.37781, 1)
+
+[node name="TreeLine" type="StaticBody3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.45399, -0.4)
+shape = SubResource("BoxShape3D_wx3p1")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44689, 0.0821198)
+texture = ExtResource("1_wftka")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(0.790885, 0, 0, 0, 0.909539, 0.0160389, 0, -0.0145899, 0.999871, -0.311887, 2.32508, -0.916588)
+flip_h = true
+modulate = Color(0.707967, 0.707967, 0.707967, 1)
+texture = ExtResource("1_wftka")
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(0.790885, 0, 0, 0, 0.909656, 0, 0, 0, 1, -0.311887, 2.32508, -1.75762)
+flip_h = true
+modulate = Color(0.423651, 0.423651, 0.423651, 1)
+texture = ExtResource("2_xw0jw")
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(0.790885, 0, 0, 0, 0.909656, 0, 0, 0, 1, -0.311887, 2.32508, -2.86079)
+modulate = Color(0.408329, 0.408329, 0.408329, 1)
+texture = ExtResource("2_xw0jw")
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform3D(0.949, 0, 0, 0, 1.092, 0, 0, 0, 1.2, -0.311887, 2.91738, -4.165)
+modulate = Color(0.266575, 0.266575, 0.266575, 1)
+texture = ExtResource("2_xw0jw")

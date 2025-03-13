@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjmh6fsucvhxx"]
+
+[ext_resource type="PackedScene" uid="uid://chjgw4fw0qnaj" path="res://Models/shell.glb" id="1_5fk3k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qryic"]
+size = Vector3(0.0354004, 0.0390625, 0.102539)
+
+[node name="Ammo" type="RigidBody3D" groups=["ammo"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0126953)
+shape = SubResource("BoxShape3D_qryic")
+
+[node name="shell" parent="." instance=ExtResource("1_5fk3k")]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://blrpku307bif3"]
+
+[ext_resource type="Script" path="res://Scripts/target.gd" id="1_2wnf6"]
+[ext_resource type="Material" uid="uid://b6n0n5s5oqf8w" path="res://Textures/Material (2).tres" id="1_ssijv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u1ph4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_m74yi"]
+
+[node name="Target" type="StaticBody3D" groups=["targets"]]
+script = ExtResource("1_2wnf6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_u1ph4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_m74yi")
+surface_material_override/0 = ExtResource("1_ssijv")

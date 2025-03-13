@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvtm7ye4gp5jf"]
+
+[ext_resource type="Texture2D" uid="uid://ix8g3nxevprx" path="res://Textures/GreenGrass128x128.png" id="1_ngmx6"]
+[ext_resource type="PackedScene" uid="uid://0556jvisllh6" path="res://scenes/player.tscn" id="2_ann4x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rb0t2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_juwyg"]
+sky_material = SubResource("ProceduralSkyMaterial_rb0t2")
+
+[sub_resource type="Environment" id="Environment_b2vmk"]
+background_mode = 2
+background_energy_multiplier = 0.02
+sky = SubResource("Sky_juwyg")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2136u"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_63o8c"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sfwcm"]
+albedo_texture = ExtResource("1_ngmx6")
+uv1_scale = Vector3(15, 15, 15)
+uv1_triplanar_sharpness = 2.21914
+uv2_scale = Vector3(5, 5, 5)
+texture_filter = 0
+
+[node name="World" type="Node3D"]
+
+[node name="TheSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.179184, 0.46679, 0.358559, 0.4281, 0.829558, -0.348476, 0.88579, -0.306497, 0, 2.46259, -3.2977)
+light_color = Color(0.332881, 0.332881, 0.332881, 1)
+light_bake_mode = 1
+shadow_normal_bias = 1.394
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b2vmk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_2136u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_63o8c")
+surface_material_override/0 = SubResource("StandardMaterial3D_sfwcm")
+
+[node name="Player" parent="." instance=ExtResource("2_ann4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.638094, 0)

@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://btrpw5w7wuy8d"]
+
+[ext_resource type="PackedScene" uid="uid://0556jvisllh6" path="res://scenes/player.tscn" id="1_wftsv"]
+[ext_resource type="PackedScene" uid="uid://dvtm7ye4gp5jf" path="res://scenes/world.tscn" id="1_xvimo"]
+[ext_resource type="PackedScene" uid="uid://cidcanbc5ivdc" path="res://scenes/test_house_interior.tscn" id="2_5vaoh"]
+[ext_resource type="PackedScene" uid="uid://capm4g2dc73ie" path="res://scenes/save_manager.tscn" id="2_8xl7k"]
+[ext_resource type="PackedScene" uid="uid://dt66tgdil6dw4" path="res://scenes/game_manager.tscn" id="3_cf3ch"]
+[ext_resource type="Material" uid="uid://sdrqhbolf0ol" path="res://Textures/graahs.tres" id="4_tr35s"]
+[ext_resource type="PackedScene" uid="uid://ceqta3ysrgae0" path="res://scenes/GasCan.tscn" id="6_lotow"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rb0t2"]
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_birw3"]
+sky_material = SubResource("ProceduralSkyMaterial_rb0t2")
+
+[sub_resource type="Environment" id="Environment_b2vmk"]
+background_mode = 2
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_birw3")
+ambient_light_color = Color(0.162066, 0.162066, 0.162066, 1)
+ambient_light_sky_contribution = 0.88
+ambient_light_energy = 2.23
+reflected_light_source = 2
+fog_enabled = true
+fog_light_color = Color(0.18382, 0.20313, 0.233488, 1)
+fog_light_energy = 2.07
+fog_density = 0.1467
+fog_aerial_perspective = 0.905
+adjustment_brightness = 2.6
+
+[node name="Game" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_wftsv")]
+transform = Transform3D(0.742023, 0, 0.670375, 0, 1, 0, -0.670375, 0, 0.742023, 9.16009, -7.40171, -1.85076)
+
+[node name="TestHouseInterior" parent="." instance=ExtResource("2_5vaoh")]
+transform = Transform3D(-4.41942, 0, 4.41942, 0, 6.25, 0, -4.41942, 0, -4.41942, 6.29405, -8, -5.60401)
+
+[node name="DoorTrigger" parent="TestHouseInterior" index="0" node_paths=PackedStringArray("targetPosition")]
+targetPosition = NodePath("../../World/houseTest/ExitPosition")
+
+[node name="StartPosition" parent="TestHouseInterior" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499539, 0.00682676, -0.349598)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="TestHouseInterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.369719, 0.242, 0.0453954)
+omni_range = 507.969
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="TestHouseInterior"]
+transform = Transform3D(0.16, 0, 0, 0, 0.16, 0, 0, 0, 0.16, -0.647205, 0.376487, 0.199673)
+
+[node name="World" parent="." instance=ExtResource("1_xvimo")]
+
+[node name="MeshInstance3D" parent="World/Ground" index="1"]
+surface_material_override/0 = ExtResource("4_tr35s")
+
+[node name="ExitPosition" type="Node3D" parent="World/houseTest" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.522395, 0.00738014, -0.594159)
+
+[node name="houseTestDoorTrigger" parent="World" index="4" node_paths=PackedStringArray("targetPosition")]
+targetPosition = NodePath("../../TestHouseInterior/StartPosition")
+
+[node name="GasCanisters" type="Node3D" parent="."]
+
+[node name="GasCanister5L" parent="GasCanisters" instance=ExtResource("6_lotow")]
+transform = Transform3D(0.978523, 0, 0.206136, 0, 1, 0, -0.206136, 0, 0.978523, 5.68696, -7.32478, -8.02492)
+gasAmount = 20.0
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="SaveManager" parent="Managers" instance=ExtResource("2_8xl7k")]
+
+[node name="GameManager" parent="Managers" instance=ExtResource("3_cf3ch")]
+
+[node name="TheSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.179184, 0.46679, 0.358559, 0.4281, 0.829558, -0.348476, 0.88579, -0.306497, 0, 2.46259, -3.2977)
+light_color = Color(0.133196, 0.133196, 0.133196, 1)
+light_energy = 0.39
+shadow_enabled = true
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b2vmk")
+
+[editable path="TestHouseInterior"]
+[editable path="World"]

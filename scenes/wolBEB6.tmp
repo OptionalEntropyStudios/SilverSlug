@@ -1,0 +1,284 @@
+[gd_scene load_steps=9 format=3 uid="uid://cr8ohxv6ykkvp"]
+
+[ext_resource type="PackedScene" uid="uid://q4rww31m5tk1" path="res://scenes/TheWolf.tscn" id="1_fg8k8"]
+[ext_resource type="PackedScene" uid="uid://0556jvisllh6" path="res://scenes/player.tscn" id="1_l6pm5"]
+[ext_resource type="PackedScene" uid="uid://dt66tgdil6dw4" path="res://scenes/game_manager.tscn" id="2_0wgqf"]
+[ext_resource type="PackedScene" uid="uid://capm4g2dc73ie" path="res://scenes/save_manager.tscn" id="3_mqqjx"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_acdpb"]
+vertices = PackedVector3Array(-33, 23, 37, -33, 23, 35.5, -35.25, 23, 35.25, -37, 23, 37, -35.25, 23, 35.25, -35.25, 23, -35.25, -37, 23, -37, -37, 23, 37, -35.25, 23, -35.25, -33, 23, -35.5, -33, 23, -37, -37, 23, -37, 35.25, 23, -35.5, 35.5, 23, -33.25, 37, 23, -33.25, 37, 23, -37, 35.25, 23, -35.5, 37, 23, -37, -33, 23, -37, -33, 23, -35.5, -34.25, 0, -3, -9.5, 0, -3, -9.5, 0, -4.25, -34.25, 0, -3, -9.5, 0, -4.25, -8, 0, -4.5, -8, 0, -34.25, -34.25, 0, -34.25, -6.75, 0, -4.5, 10.5, 0, -7.75, 10.5, 0, -10.25, -8, 0, -4.5, -6.75, 0, -4.5, 10.5, 0, -10.25, 12, 0, -34.25, -8, 0, -34.25, 10.5, 0, -10.25, 12, 0, -10.5, 12, 0, -34.25, 13.5, 0, -10.5, 13.75, 0, -9, 34.5, 0, -9, 34.5, 0, -34.25, 12, 0, -34.25, 12, 0, -34.25, 12, 0, -10.5, 13.5, 0, -10.5, 35.5, 23, 33.25, 37, 23, 33.25, 37, 23, -33.25, 35.5, 23, -33.25, 11.5, 14, -9.5, 11.5, 14, -8.5, 12.5, 14, -8.5, 12.5, 14, -9.5, 18.5, 0, 10.5, 18.75, 0, 12, 34.5, 0, 12, 13.75, 0, -7.75, 16, 0, 10.5, 18.5, 0, 10.5, 13.75, 0, -9, 13.75, 0, -7.75, 18.5, 0, 10.5, 34.5, 0, 12, 34.5, 0, -9, -6.25, 0, -4, 11, 0, -7.25, 10.5, 0, -7.75, -6.75, 0, -4.5, 13.75, 0, 9.25, 15.5, 0, 11, 16, 0, 10.5, 13.75, 0, -7.75, 13.25, 0, -7.25, 13.75, 0, 9.25, 13.25, 0, -7.25, 11, 0, -7.25, -6.25, 0, -1.5, -6.75, 0, -1.25, 11, 0, -7.25, -6.25, 0, -4, -6.25, 0, -1.5, -8.5, 14, -3.5, -8.5, 14, -2.5, -7.5, 14, -2.5, -7.5, 14, -3.5, -34.25, 0, 16, -18.5, 0, 16, -18.25, 0, 14.5, -18.25, 0, 14.5, -15.75, 0, 14.5, -9.5, 0, -1.75, -18.25, 0, 14.5, -9.5, 0, -1.75, -9.5, 0, -3, -34.25, 0, -3, -34.25, 0, 16, -15.75, 0, 14.5, -15.25, 0, 15, -14.5, 0, 14.75, -13.5, 0, 13.75, -9, 0, -1.25, -9.5, 0, -1.75, 15.5, 0, 13.5, 15.5, 0, 11, 13.75, 0, 9.25, -6.75, 0, -1.25, -9, 0, -1.25, -13.5, 0, 13.75, 16.5, 14, 11.5, 16.5, 14, 12.5, 17.5, 14, 12.5, 17.5, 14, 11.5, 34.5, 0, 12, 18.75, 0, 12, 18.75, 0, 13.25, 34.5, 0, 12, 18.75, 0, 13.25, 18.25, 0, 13.75, 17, 0, 34.5, 34.5, 0, 34.5, 18.25, 0, 13.75, 17, 0, 13.75, 17, 0, 34.5, -13.5, 0, 13.75, -14.5, 0, 14.75, 16, 0, 13.75, 15.5, 0, 13.5, -14.5, 0, 14.75, -15.25, 0, 15, -15.25, 0, 17.25, -15.75, 0, 17.75, -17, 0, 17.75, -17, 0, 34.5, -15.25, 0, 17.25, -15.75, 0, 17.75, -17, 0, 34.5, -14.5, 0, 14.75, -15.25, 0, 17.25, -17, 0, 34.5, 17, 0, 34.5, 17, 0, 13.75, 16, 0, 13.75, -17.5, 14, 15.5, -17.5, 14, 16.5, -16.5, 14, 16.5, -16.5, 14, 15.5, -18.5, 0, 17.5, -18.5, 0, 16, -34.25, 0, 16, -17, 0, 34.5, -17, 0, 17.75, -18.5, 0, 17.5, -34.25, 0, 16, -34.25, 0, 34.5, 37, 23, 33.25, 35.5, 23, 33.25, 35.25, 23, 35.5, 37, 23, 37, 35.25, 23, 35.5, -33, 23, 35.5, -33, 23, 37, 37, 23, 37)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(4, 7, 5), PackedInt32Array(5, 7, 6), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 26), PackedInt32Array(26, 23, 27), PackedInt32Array(30, 29, 28), PackedInt32Array(32, 31, 33), PackedInt32Array(33, 31, 34), PackedInt32Array(34, 31, 35), PackedInt32Array(38, 37, 36), PackedInt32Array(40, 39, 41), PackedInt32Array(41, 39, 42), PackedInt32Array(42, 39, 43), PackedInt32Array(46, 45, 44), PackedInt32Array(50, 49, 47), PackedInt32Array(47, 49, 48), PackedInt32Array(54, 53, 51), PackedInt32Array(51, 53, 52), PackedInt32Array(57, 56, 55), PackedInt32Array(60, 59, 58), PackedInt32Array(62, 61, 63), PackedInt32Array(63, 61, 64), PackedInt32Array(64, 61, 65), PackedInt32Array(69, 68, 66), PackedInt32Array(66, 68, 67), PackedInt32Array(71, 70, 72), PackedInt32Array(72, 70, 74), PackedInt32Array(72, 74, 73), PackedInt32Array(76, 75, 77), PackedInt32Array(77, 75, 78), PackedInt32Array(78, 75, 79), PackedInt32Array(82, 81, 80), PackedInt32Array(86, 85, 83), PackedInt32Array(83, 85, 84), PackedInt32Array(87, 89, 88), PackedInt32Array(92, 91, 90), PackedInt32Array(94, 93, 95), PackedInt32Array(95, 93, 97), PackedInt32Array(95, 97, 96), PackedInt32Array(99, 98, 100), PackedInt32Array(100, 98, 101), PackedInt32Array(101, 98, 102), PackedInt32Array(102, 98, 103), PackedInt32Array(105, 104, 106), PackedInt32Array(106, 104, 107), PackedInt32Array(107, 104, 108), PackedInt32Array(108, 104, 109), PackedInt32Array(113, 112, 110), PackedInt32Array(110, 112, 111), PackedInt32Array(116, 115, 114), PackedInt32Array(118, 117, 119), PackedInt32Array(119, 117, 121), PackedInt32Array(119, 121, 120), PackedInt32Array(124, 123, 122), PackedInt32Array(128, 127, 125), PackedInt32Array(125, 127, 126), PackedInt32Array(131, 130, 129), PackedInt32Array(134, 133, 132), PackedInt32Array(137, 136, 135), PackedInt32Array(139, 138, 140), PackedInt32Array(140, 138, 143), PackedInt32Array(140, 143, 142), PackedInt32Array(140, 142, 141), PackedInt32Array(147, 146, 144), PackedInt32Array(144, 146, 145), PackedInt32Array(150, 149, 148), PackedInt32Array(153, 152, 154), PackedInt32Array(154, 152, 151), PackedInt32Array(154, 151, 155), PackedInt32Array(157, 156, 158), PackedInt32Array(158, 156, 159), PackedInt32Array(161, 160, 162), PackedInt32Array(162, 160, 163)]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tbagt"]
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_dbhxi"]
+sky_material = SubResource("ProceduralSkyMaterial_tbagt")
+
+[sub_resource type="Environment" id="Environment_s8mw1"]
+background_mode = 2
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_dbhxi")
+ambient_light_color = Color(0.162066, 0.162066, 0.162066, 1)
+ambient_light_sky_contribution = 0.88
+ambient_light_energy = 2.23
+reflected_light_source = 2
+fog_enabled = true
+fog_light_color = Color(0.18382, 0.20313, 0.233488, 1)
+fog_light_energy = 3.08
+fog_density = 0.2
+fog_aerial_perspective = 0.905
+adjustment_brightness = 2.6
+
+[node name="WOLFTESTPLAYGROUND" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00533056, -10.0716, 0.00808334)
+navigation_mesh = SubResource("NavigationMesh_acdpb")
+
+[node name="Bounds" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+use_collision = true
+size = Vector3(75, 25, 75)
+
+[node name="Carve" type="CSGBox3D" parent="NavigationRegion3D/Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7302, 0)
+operation = 2
+size = Vector3(70, 24.4395, 70)
+
+[node name="Pillar" type="CSGBox3D" parent="NavigationRegion3D/Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -3.5, 16)
+size = Vector3(2, 14, 2)
+
+[node name="Pillar2" type="CSGBox3D" parent="NavigationRegion3D/Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -3.5, -3)
+size = Vector3(2, 14, 2)
+
+[node name="Pillar3" type="CSGBox3D" parent="NavigationRegion3D/Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -3.5, -9)
+size = Vector3(2, 14, 2)
+
+[node name="Pillar4" type="CSGBox3D" parent="NavigationRegion3D/Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -3.5, 12)
+size = Vector3(2, 14, 2)
+
+[node name="WerewolfPS1_animated" parent="NavigationRegion3D/Bounds" instance=ExtResource("1_fg8k8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.66315, -7.22406, -5.2665)
+playerPath = NodePath("../../../Player")
+
+[node name="Skeleton3D" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones" index="0"]
+bones/0/position = Vector3(0.0206711, 0.948561, -0.0247763)
+bones/0/rotation = Quaternion(-4.26232e-17, 0.999201, 2.98262e-08, -0.0399677)
+bones/1/rotation = Quaternion(-3.95889e-07, 9.31323e-08, -1.21867e-07, 1)
+bones/2/rotation = Quaternion(0.664425, -0.151698, 0.719497, -0.13361)
+bones/3/rotation = Quaternion(0.0418876, 0.0699056, -0.625087, 0.776289)
+bones/4/rotation = Quaternion(-0.0155839, -0.126458, 0.653652, 0.745993)
+bones/6/rotation = Quaternion(0.719888, 0.161365, -0.664025, -0.12163)
+bones/7/rotation = Quaternion(0.0418903, -0.069895, 0.625087, 0.77629)
+bones/8/rotation = Quaternion(-0.0155895, 0.126434, -0.653652, 0.745996)
+bones/9/rotation = Quaternion(0.0882702, 0.0556472, -0.341286, 0.93415)
+bones/10/rotation = Quaternion(0.676606, -0.0558222, 0.728531, 0.0912752)
+bones/11/rotation = Quaternion(-0.0791326, -0.00716508, 0.00551133, 0.996823)
+bones/12/rotation = Quaternion(-0.264872, 0.625299, -0.286645, 0.67578)
+bones/13/rotation = Quaternion(-1.15791e-07, -7.00955e-08, 0.0447142, 0.999)
+bones/14/rotation = Quaternion(8.84134e-05, -5.25887e-05, -0.929102, 0.369822)
+bones/15/position = Vector3(0.0220311, 0.324642, -0.223586)
+bones/15/rotation = Quaternion(0.471066, 0.0771232, 0.762629, -0.436515)
+bones/16/rotation = Quaternion(0.0746208, -0.0189589, -0.106742, 0.991301)
+bones/17/rotation = Quaternion(0.133746, -0.000716489, -0.0132037, 0.990927)
+bones/18/rotation = Quaternion(0.165007, 0.0133286, -0.13593, 0.97679)
+bones/19/rotation = Quaternion(-0.192716, -0.0221994, -0.262558, 0.945215)
+bones/21/rotation = Quaternion(-0.0388208, 0.0821869, -0.292296, 0.951999)
+bones/23/rotation = Quaternion(-0.0265827, 0.114344, -0.350082, 0.929334)
+bones/25/rotation = Quaternion(-0.0564605, 0.14669, -0.368949, 0.916063)
+bones/26/rotation = Quaternion(0.254323, 0.249971, -0.12725, 0.92555)
+bones/27/rotation = Quaternion(-0.223386, -0.134093, 0.185839, 0.947408)
+bones/28/position = Vector3(0.0220685, 0.325044, 0.22462)
+bones/28/rotation = Quaternion(0.727556, 0.393938, 0.553142, -0.0975099)
+bones/29/rotation = Quaternion(0.202566, -0.00698242, 0.0469194, 0.978119)
+bones/30/rotation = Quaternion(0.133746, 0.000716629, 0.0132036, 0.990927)
+bones/31/rotation = Quaternion(-0.0190674, -0.0300863, 0.0721706, 0.996756)
+bones/33/rotation = Quaternion(-0.0926055, -0.0512496, 0.0141458, 0.994283)
+bones/35/rotation = Quaternion(-0.172021, -0.0339836, 0.0509357, 0.983188)
+bones/37/rotation = Quaternion(-0.201879, -0.0293674, 0.0730079, 0.976244)
+bones/39/rotation = Quaternion(0.196792, -0.206611, 0.299811, 0.910329)
+
+[node name="Physical Bone Bone_004" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="1"]
+transform = Transform3D(0.997509, -0.0799182, -2.48509e-05, -1.98692e-06, 3.5768e-07, 0.992888, -0.0799061, -0.997672, 1.8614e-05, 0.0206509, 0.885618, -0.0248251)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78802e-05, -4.89691e-05, 0.0639553)
+body_offset = Transform3D(-1.0007, -2.27168e-05, 2.62558e-05, -1.98931e-06, 2.98023e-07, 0.992888, -2.17706e-05, 1.00087, -1.65105e-05, 1.62125e-05, -0.0635004, 5.00679e-05)
+
+[node name="Physical Bone Femur_L" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="2"]
+transform = Transform3D(0.00798408, -0.998343, -0.0409056, -0.393748, -0.0407246, 0.917977, -0.918859, 0.0087444, -0.393611, 0.12686, 0.480025, 0.120103)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00160217, -0.00904035, 0.371617)
+body_offset = Transform3D(0.999702, 2.69329e-05, -8.5324e-05, 2.06232e-05, 1.21747e-06, -0.999642, 2.563e-06, 0.999211, 1.28844e-05, 0.00163364, 0.371484, 0.00902843)
+
+[node name="Physical Bone Shin_L" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="3"]
+transform = Transform3D(0.122917, -0.991584, -0.0388222, 0.809294, 0.0775523, 0.581424, -0.573631, -0.103047, 0.811497, 0.161437, -0.0242882, 0.069509)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000325509, -0.000268446, 0.253236)
+body_offset = Transform3D(0.999559, -1.65626e-05, 0.000539154, 0.000268698, 2.58684e-05, -0.999044, 7.68527e-06, 0.999936, -1.04681e-05, 0.000188828, 0.252994, 0.000271082)
+
+[node name="Physical Bone Ankle_L" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="4"]
+transform = Transform3D(-0.115131, -0.992113, -0.0733732, -0.464505, -0.0117901, 0.888181, -0.880782, 0.135856, -0.458495, 0.18936, -0.390901, -0.022553)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000400039, -0.000350928, 0.246935)
+body_offset = Transform3D(1.0024, -1.03712e-05, -0.000191092, 9.09269e-05, -2.5034e-06, -1.00223, 5.00903e-05, 1.00144, 3.08342e-05, -0.000353813, 0.247486, 0.0003438)
+
+[node name="Physical Bone Femur_R" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="5"]
+transform = Transform3D(0.00738441, 0.999304, 0.0394853, 0.393968, -0.0392038, 0.918375, 0.91933, 0.00876701, -0.393853, -0.104221, 0.477941, 0.12692)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00367049, 0.0100479, 0.376816)
+body_offset = Transform3D(1.00022, -1.5486e-05, -4.97699e-06, -2.64943e-05, 1.37866e-05, -1.00005, 9.5265e-06, 1.00011, 1.4896e-05, 0.00367332, 0.376833, -0.0100546)
+
+[node name="Physical Bone Shin_R" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="6"]
+transform = Transform3D(0.124238, 0.991584, 0.0379601, -0.809734, 0.0790789, 0.582355, 0.574219, -0.103015, 0.812863, -0.119, -0.0243063, 0.0693331)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000469463, -5.44904e-05, 0.252952)
+body_offset = Transform3D(1.00042, 5.89676e-05, -0.000454187, -0.000379086, 2.60472e-05, -1.00066, -5.27017e-05, 1.00005, -1.82241e-05, -0.000354767, 0.25312, 5.91278e-05)
+
+[node name="Physical Bone Ankle_R" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="7"]
+transform = Transform3D(-0.115857, 0.991281, 0.0719219, 0.463771, -0.0110347, 0.887331, 0.880543, 0.135599, -0.458216, -0.147186, -0.390466, -0.0227575)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00054676, 0.000749596, 0.246683)
+body_offset = Transform3D(1.00193, -0.000461981, -6.61612e-06, 0.000286847, 0.000660293, -1.00125, -0.000100635, 1.00057, 3.0864e-05, 0.000549793, 0.24699, -0.000757694)
+
+[node name="Physical Bone Bone_001" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="8"]
+transform = Transform3D(0.00191409, -1.02056, -0.00118545, -0.720738, -0.000622059, -0.697126, 0.699461, 0.00216907, -0.718327, 0.0212479, 1.49988, 0.144674)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000528484, 0.000291897, 0.236411)
+body_offset = Transform3D(1.00435, 2.01274e-05, 0.000304282, 0.000304341, -8.88727e-05, -1.00099, -7.91857e-06, 1.02056, -3.48932e-06, -0.000602722, 0.236645, -0.00029707)
+
+[node name="Physical Bone Bone_002" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="9"]
+transform = Transform3D(-1.01758, -0.000848999, -0.00210924, -0.000564421, 0.989421, -0.155016, 0.00220366, -0.154738, -0.990159, 0.0214481, 1.67567, 0.383721)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75314e-05, -0.0015666, 0.0707897)
+body_offset = Transform3D(6.777e-06, -0.76308, -0.648923, -2.12872e-05, 0.648543, -0.763773, 1.01758, -1.62959e-05, 3.9293e-05, 0.0447416, 0.0550833, -7.15256e-05)
+
+[node name="Physical Bone Arm_L" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="10"]
+transform = Transform3D(-0.787308, -0.542885, -0.294712, -0.287641, -0.100028, 0.953789, -0.546678, 0.83446, -0.0775355, 0.341384, 1.23122, 0.248602)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000215557, -0.000124096, 0.32892)
+body_offset = Transform3D(1.00072, 0.000228792, 8.68998e-05, 1.95876e-05, 4.12762e-05, -1.00129, -0.000220835, 1.00053, -6.91712e-05, 0.000187159, 0.329344, 0.000146866)
+
+[node name="Physical Bone Forearm_L" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="11"]
+transform = Transform3D(-0.843988, -0.536961, -0.0375491, -0.0786367, 0.0537618, 0.997427, -0.532451, 0.843512, -0.087572, 0.447238, 0.679664, 0.295085)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.62119e-06, -0.000172343, 0.239114)
+body_offset = Transform3D(1.001, -5.93066e-06, -0.000122245, -6.72415e-06, 8.17552e-05, -1.00197, -0.00016138, 1.00136, -1.56462e-07, 3.38554e-05, 0.239585, 0.000172615)
+
+[node name="Physical Bone Arm_R" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="12"]
+transform = Transform3D(-0.881707, 0.371351, 0.293616, 0.267634, -0.121304, 0.956614, 0.390698, 0.921412, 0.00751086, -0.301375, 1.22616, 0.221771)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49941e-05, 0.000111653, 0.333329)
+body_offset = Transform3D(1.00084, 7.70092e-05, -2.35108e-05, -9.67362e-05, 8.13324e-06, -1.00069, 2.81632e-05, 1.00081, -7.77459e-05, -5.72205e-05, 0.333558, -8.58307e-05)
+
+[node name="Physical Bone Forearm_R" parent="NavigationRegion3D/Bounds/WerewolfPS1_animated/WolfBones/Skeleton3D" index="13"]
+transform = Transform3D(-0.891699, 0.452625, 0.0379741, 0.17807, 0.271327, 0.94681, 0.417899, 0.849998, -0.322198, -0.405838, 0.689093, 0.296611)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000114183, 5.42836e-05, 0.239604)
+body_offset = Transform3D(1.00074, -2.12193e-05, -2.85804e-05, -0.000119269, -0.000130028, -1.00085, -5.54621e-05, 1.00049, 8.47578e-05, 0.000121117, 0.239808, -7.4625e-05)
+
+[node name="Player" parent="." instance=ExtResource("1_l6pm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.63521, 0)
+
+[node name="GameManager" parent="." instance=ExtResource("2_0wgqf")]
+
+[node name="SaveManager" parent="." instance=ExtResource("3_mqqjx")]
+
+[node name="TheSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.179184, 0.46679, 0.358559, 0.4281, 0.829558, -0.348476, 0.88579, -0.306497, 0, 2.46259, -3.2977)
+light_color = Color(0.133196, 0.133196, 0.133196, 1)
+light_energy = 0.39
+shadow_enabled = true
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s8mw1")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.531118, 0.847298, 0, -0.847298, -0.531118, -8.30395, -1.30372, -1.55435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 7.40731e-08, 4.64318e-08, 0, -0.531118, 0.847298, 8.74228e-08, 0.847298, 0.531118, -8.30395, -1.30372, -6.55435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.847298, 0.531118, 0, -0.531118, 0.847298, 1, 3.70366e-08, 2.32159e-08, -10.804, -1.30372, -4.05435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.847298, -0.531118, 0, -0.531118, 0.847298, -1, 3.70366e-08, 2.32159e-08, -5.80395, -1.30372, -4.05435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.531118, 0.847298, 0, -0.847298, -0.531118, 12.696, -1.30372, -6.55435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D6" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 7.40731e-08, 4.64318e-08, 0, -0.531118, 0.847298, 8.74228e-08, 0.847298, 0.531118, 12.696, -1.30372, -11.5543)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D7" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.847298, 0.531118, 0, -0.531118, 0.847298, 1, 3.70366e-08, 2.32159e-08, 10.196, -1.30372, -9.05435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D8" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.847298, -0.531118, 0, -0.531118, 0.847298, -1, 3.70366e-08, 2.32159e-08, 15.196, -1.30372, -9.05435)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D9" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.531118, 0.847298, 0, -0.847298, -0.531118, 17.696, -1.30372, 14.4457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D10" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 7.40731e-08, 4.64318e-08, 0, -0.531118, 0.847298, 8.74228e-08, 0.847298, 0.531118, 17.696, -1.30372, 9.44565)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D11" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.847298, 0.531118, 0, -0.531118, 0.847298, 1, 3.70366e-08, 2.32159e-08, 15.196, -1.30372, 11.9457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D12" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.847298, -0.531118, 0, -0.531118, 0.847298, -1, 3.70366e-08, 2.32159e-08, 20.196, -1.30372, 11.9457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D13" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.531118, 0.847298, 0, -0.847298, -0.531118, -17.304, 0.696276, 18.4457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D14" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 7.40731e-08, 4.64318e-08, 0, -0.531118, 0.847298, 8.74228e-08, 0.847298, 0.531118, -17.304, 0.696276, 13.4457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D15" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.847298, 0.531118, 0, -0.531118, 0.847298, 1, 3.70366e-08, 2.32159e-08, -19.804, 0.696276, 15.9457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[node name="SpotLight3D16" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.847298, -0.531118, 0, -0.531118, 0.847298, -1, 3.70366e-08, 2.32159e-08, -14.804, 0.696276, 15.9457)
+light_energy = 5.04
+spot_range = 15.0912
+spot_angle = 15.7257
+
+[editable path="NavigationRegion3D/Bounds/WerewolfPS1_animated"]

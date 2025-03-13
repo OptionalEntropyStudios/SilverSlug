@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhmynibpjkel8"]
+
+[ext_resource type="PackedScene" uid="uid://bk0fsf4p8u8wb" path="res://Models/shotgun.glb" id="1_00y8f"]
+
+[node name="shotgun" instance=ExtResource("1_00y8f")]
+
+[node name="Shotgun" parent="." index="0"]
+cast_shadow = 0
+gi_mode = 0

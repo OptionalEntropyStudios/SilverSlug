@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl085gvjgnxe1"]
+
+[ext_resource type="PackedScene" uid="uid://bhmynibpjkel8" path="res://scenes/shotgun.tscn" id="1_2y2gy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k7864"]
+size = Vector3(0.0258789, 0.0845947, 0.425293)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_plslg"]
+size = Vector3(0.0263672, 0.0219727, 0.73877)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f6ruv"]
+size = Vector3(0.0283203, 0.0180054, 0.31189)
+
+[node name="GunPickup" type="RigidBody3D" groups=["gun"]]
+
+[node name="shotgun" parent="." instance=ExtResource("1_2y2gy")]
+transform = Transform3D(0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.983395, 0.18148, 0, -0.18148, 0.983395, -0.000587463, 0.011581, -0.362969)
+shape = SubResource("BoxShape3D_k7864")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075398, 0.208551)
+shape = SubResource("BoxShape3D_plslg")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0555642, 0.0104619)
+shape = SubResource("BoxShape3D_f6ruv")
