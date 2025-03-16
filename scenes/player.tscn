@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://db4tdpvjgpwv3" path="res://Textures/xhair_hand_interact.png" id="6_0is5s"]
 [ext_resource type="Texture2D" uid="uid://wgdspqbogq8u" path="res://Textures/xhair_pointer.png" id="7_qvsh7"]
 [ext_resource type="Texture2D" uid="uid://dwkpii13g7cnd" path="res://Textures/xhair_hand_pickup.png" id="7_t1b5p"]
-[ext_resource type="AudioStream" uid="uid://bnexkwbwavrbt" path="res://SFX/reload.wav" id="8_ud0qk"]
+[ext_resource type="AudioStream" uid="uid://b77ux3i4an8e7" path="res://SFX/reloadv2.wav" id="8_60mlk"]
 [ext_resource type="Texture2D" uid="uid://cglyysubmyloc" path="res://Textures/xhair_eye_look.png" id="9_1u4ot"]
 [ext_resource type="AudioStream" uid="uid://b1meqx6taybmm" path="res://SFX/gunshot.wav" id="9_2pdu1"]
 [ext_resource type="AudioStream" uid="uid://c3xpl33ucp1fx" path="res://SFX/shotgunEmptyClick.wav" id="10_ity45"]
@@ -195,7 +195,7 @@ draw_pass_1 = SubResource("QuadMesh_gfpl2")
 
 [node name="GunReloadSound" type="AudioStreamPlayer3D" parent="Head/Arm/shotgun"]
 transform = Transform3D(-4.16667, 1.42109e-13, -6.29149e-07, 8.03113e-14, 4.16667, 3.57628e-07, 6.29149e-07, 3.57628e-07, -4.16667, -3.27826e-07, -1.1597, -2.13305)
-stream = ExtResource("8_ud0qk")
+stream = ExtResource("8_60mlk")
 volume_db = -16.762
 pitch_scale = 0.83
 

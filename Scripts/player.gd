@@ -51,6 +51,8 @@ var timeSprinting : float = 0.0
 var running = false
 signal playerRunning
 signal playerRanTooLong
+signal playerIndoors
+signal playerOutdoors
 @export var gunHoldingSpeed = 0.45
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -184,7 +186,13 @@ func checkCrosshairStatus():
 				xhair_pointer.hide()
 				if(Input.is_action_just_pressed("useButton")):
 					target.LoadNextScene(self)
-					isIndoors = !isIndoors
+					isIndoors = not isIndoors
+					if(isIndoors):
+						print("I went indoors and emitted the indoors signal")
+						playerIndoors.emit()
+					else: 
+						print("I just came down from the high of my li- I mean I came out the house, emitting outdoors signal")
+						playerOutdoors.emit()
 			elif(target.is_in_group("gas")):
 				pickupXhair.show()
 				xhair_pointer.hide()

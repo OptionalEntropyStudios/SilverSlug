@@ -32,6 +32,7 @@ var targetPos2D = null
 
 var secondAttack = false
 var canAttack : bool = true
+var isPlayerOutside : bool
 var ableToLook : bool = true
 var isDormant : bool = true
 signal wentDormant
@@ -46,6 +47,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	player = get_node(playerPath)
+	isPlayerOutside = true
 	stateMachine = animTree.get("parameters/playback")
 	timeSinceLastStep = 0.0
 func _process(delta):
@@ -251,3 +253,11 @@ func sprintAtTheMf():
 	animTree.set("parameters/conditions/isCrouching", true)
 	animTree.set("parameters/conditions/isStalking", true)
 	animTree.set("parameters/conditions/isSprinting", true) #Start sprinting at them
+
+func onPlayerWentOut():
+	isPlayerOutside = true
+	print("Fuck ye we out here")
+func onPlayerWentInside():
+	isPlayerOutside = false
+	print("Awww sheeet you went inside....")
+	goDormant()
