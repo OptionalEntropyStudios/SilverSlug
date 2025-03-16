@@ -154,7 +154,9 @@ crosshair = NodePath("../../../CanvasLayer/Crosshair")
 transform = Transform3D(1, 0, 0, 0, 0.87855, 0.47765, 0, -0.47765, 0.87855, 0.116, -0.412798, -0.0179862)
 script = ExtResource("3_1t5oc")
 traumaAmount = 0.6
-reloadTime = 3.5
+reloadTime = 3.65
+reloadSoundDelay = 1.4
+gunHoldLimit = 10.0
 
 [node name="shotgun" parent="Head/Arm" instance=ExtResource("2_tk2k1")]
 transform = Transform3D(-0.24, 5.03307e-15, 3.6239e-08, 1.06581e-14, 0.24, 3.72529e-08, -3.6239e-08, 3.72529e-08, -0.24, 0, 0.278327, -0.511932)
@@ -195,18 +197,18 @@ draw_pass_1 = SubResource("QuadMesh_gfpl2")
 transform = Transform3D(-4.16667, 1.42109e-13, -6.29149e-07, 8.03113e-14, 4.16667, 3.57628e-07, 6.29149e-07, 3.57628e-07, -4.16667, -3.27826e-07, -1.1597, -2.13305)
 stream = ExtResource("8_ud0qk")
 volume_db = -16.762
-pitch_scale = 1.04
+pitch_scale = 0.83
 
 [node name="GunShotSFX" type="AudioStreamPlayer3D" parent="Head/Arm/shotgun"]
 stream = ExtResource("9_2pdu1")
-volume_db = -19.81
-max_db = -15.845
-pitch_scale = 0.58
+volume_db = -20.298
+pitch_scale = 0.73
 attenuation_filter_db = 0.0
 
 [node name="EmptyClickSound" type="AudioStreamPlayer3D" parent="Head/Arm/shotgun"]
 stream = ExtResource("10_ity45")
 volume_db = -20.645
+pitch_scale = 0.73
 max_polyphony = 4
 attenuation_filter_db = 0.0
 
@@ -223,6 +225,7 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 
 [node name="InteractRay" type="RayCast3D" parent="Head"]
 transform = Transform3D(0.878092, -0.478493, 0, 0.478493, 0.878092, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(0, 0, -1.75)
+collision_mask = 129
 
 [node name="GunClipCheckRay" type="RayCast3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.892358, 0.451329, 0, -0.451329, 0.892358, 0.10438, -0.0347722, -0.0321964)
@@ -369,6 +372,8 @@ pitch_scale = 1.09
 
 [node name="shellPickupSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_nstt4")
+volume_db = -9.532
+pitch_scale = 0.72
 max_polyphony = 10
 
 [editable path="Head/shakeable_camera"]

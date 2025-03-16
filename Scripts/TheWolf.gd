@@ -34,10 +34,13 @@ var secondAttack = false
 var canAttack : bool = true
 var ableToLook : bool = true
 var isDormant : bool = true
+signal wentDormant
 signal attackFinished
 @export var sprintSpeed = 7.5
 @export var stalkSpeed = 1.5
 @export var moveSpeed = 1.5
+
+@export var distanceToStartApproachingPlayer : float
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -45,14 +48,15 @@ func _ready():
 	player = get_node(playerPath)
 	stateMachine = animTree.get("parameters/playback")
 	timeSinceLastStep = 0.0
-	var closestTargetPos = getStartPosition()
-	global_position = Vector3(closestTargetPos.x, global_position.y, closestTargetPos.y)
 func _process(delta):
 	velocity = Vector3.ZERO #Reset the velocity everyframe, idk why :ddd
 	#Gravity boiiii
 	if(not is_on_floor()):
 		velocity.y -= gravity
 	if(!isDormant):
+		if(global_position.distance_to(player.global_position) < distanceToStartApproachingPlayer):
+			if(stateMachine.get_current_node() == "WolfStandingPose"):
+				animTree.set("parameters/conditions/isCrouching", true)
 		match stateMachine.get_current_node(): #Check the animationtree for the current animation playing and set movement speed based on that.
 			"WolfStandingPose":
 				moveSpeed = 0
@@ -77,7 +81,7 @@ func _process(delta):
 				moveSpeed = 0
 			"WolfGetHitRunAway":
 				moveSpeed = 0
-		if(ableToLook): #If the wolf is able to look around aka, not getting up from being shot at.
+		if(ableToLook): #If the wolf is able to look around aka not getting up from being shot at.
 			var wolfPos2D = Vector2(global_position.x, global_position.z) #The wolf's global position, from top down view
 			var nextNavPoint
 			if(!isRunningAway):# If the wolf is not running away
@@ -87,7 +91,6 @@ func _process(delta):
 				targetPos2D = Vector2(player.global_position.x, player.global_position.z) #The player's pos from top down
 			else:  #wolf is running away
 				if(!gotClosestTarget):
-					print("I don't know where to go yet")
 					targetPos2D = getClosestMovementTarget() #Find the nearest escape target
 				navAgent.target_position = Vector3(targetPos2D.x, global_position.y, targetPos2D.y) #set that target as the position to move towards
 				nextNavPoint = navAgent.get_next_path_position() #calculate next step along the path to the target
@@ -96,14 +99,7 @@ func _process(delta):
 			rotation.y = lerp_angle(rotation.y, atan2(lookDirection.x, lookDirection.y), delta / .5) #Smoothly look at the target position
 		if(isRunningAway):
 			if(global_position.distance_to(Vector3(navAgent.target_position.x, global_position.y, navAgent.target_position.z)) < 1): #If wolf is closer than 1m to the target, we have reached it
-				print("I have run away now :)")
-				setAllConditionsToFalse() #Set all animTree conditions to false, aka reset them :)
-				animTree.set("parameters/conditions/goDormant", true) #The wolf will just stand around.
-				canAttack = false
-				isRunningAway = false
-				isDormant = true
-				var closestTargetPos = getStartPosition()
-				global_position = Vector3(closestTargetPos.x, global_position.y, closestTargetPos.y)
+				goDormant()
 	else:
 		pass
 	footSteps()
@@ -124,23 +120,25 @@ func CollisionDetected(body): #Check if we have hit anything in the spot, where 
 				animTree.set("parameters/conditions/secondAttack", true) #set the condtion controlling attack anim to be true
 				print("Game over haha")
 func _on_player_player_running(): #Called when the player is running
-	if(stateMachine.get_current_node() == "WolfStandingPose"):
-		print("I was standing and the player pressed shift")
-		startApproaching()
-	elif(stateMachine.get_current_node() == "WolfStalking"): #If the wolf is stalking and player starts running, trigger the sprint
-		print("The player has pressed shift and I am stalking")
-		animTree.set("parameters/conditions/isSprinting", true) #Start sprinting at them
-			#If the player runs too much in a certain time, trigger spawning
+	if(!isDormant):
+		if(stateMachine.get_current_node() == "WolfStandingPose"):
+			sprintAtTheMf()
+		elif(stateMachine.get_current_node() == "WolfStalking"): #If the wolf is stalking and player starts running, trigger the sprint
+			print("Wolf aggroed into sprinting")
+			sprintAtTheMf()
 
 func _on_arm_gun_readied(): #Called if the player is readying their gun
-	if(stateMachine.get_current_node() == "WolfIntoCrouch"):
-		animTree.set("parameters/conditions/isStalking", true)
-	if (stateMachine.get_current_node() == "WolfStalking"): #If wolf is stalking toward player,
-		animTree.set("parameters/conditions/isSprinting", true) #Start sprinting at them
+	if(!isDormant):
+		if(stateMachine.get_current_node() == "WolfStandingPose"):
+			print("The wolf was standing and will now sprint at the player")
+			sprintAtTheMf()
+		elif(stateMachine.get_current_node() == "WolfStalking"):
+			sprintAtTheMf()
 
 
 func _on_animation_tree_animation_finished(anim_name):
 	if(anim_name == "WolfFirstAttack"):
+		wolfHitSound.play() #The wolf gets "hurt" cuz of the silver cross
 		attackFinished.emit()
 		var forwardTeleportLocation = playerCollision.global_position#We gotta teleport like 2 meters forward, so
 		global_position = forwardTeleportLocation #So we just gonna teleport to where the player pos was
@@ -148,8 +146,7 @@ func _on_animation_tree_animation_finished(anim_name):
 		canAttack = false
 		animTree.set("parameters/conditions/firstAttack", false)
 		animTree.set("parameters/conditions/finishedAttack", true)
-		#Emit the footsetps sound
-		#Go dormant or smth 
+
 	if(anim_name == "WolfGetHitRunAway"): #If the wolf has recovered from getting hit
 		animTree.set("parameters/conditions/isHit",false)
 		animTree.set("parameters/conditions/gotUp", true)
@@ -170,26 +167,15 @@ func getClosestMovementTarget() -> Vector2: #one's position from top down view
 	var closestTarget = null #The variable to store the closest node3d into
 	for target in get_tree().get_nodes_in_group("movementTarget"): #Get every node, that is in group movementTarget and iterate through them
 		var distanceToTarget = self.global_position.distance_to(target.global_position)
-		##print("The distance to " + target.name + " is " + str(distanceToTarget))
-		#We're also going to want to check it to be far away enough to not be visible to the player.
 		if(closestTarget != null): #just a check for the first time, cuz no spots have been measured yet
 			if(distanceToTarget < closestTarget.global_position.distance_to(self.global_position) && distanceToTarget > minEscapeDistance): #If the distance to iterated target is smaller, assign that as new closestTarget
-				print(str(distanceToTarget) + " iss smaller than " + str(closestTarget.global_position.distance_to(self.global_position)) + " and larger than " + str(minEscapeDistance))
 				closestTarget = target
 		else: 
 			if(target.global_position.distance_to(self.global_position) > minEscapeDistance): #If the target is further away than the minEscape distance,
 				closestTarget = target #Set that to be target
 			else: continue
-	print("I have found my target and it is " + closestTarget.name)
 	return Vector2(closestTarget.global_position.x, closestTarget.global_position.z)
-func startApproaching(): #Called when the wolf need to start approaching player
-	canAttack = true
-	isDormant = false
-	animTree.set("parameters/conditions/isCrouching", true) #Wolf will go into a crouch at the start
-	print("I am crouching now")
-	animTree.set("parameters/conditions/goDormant", false) #Set the goDormant trigger to false, so the wolf won't go dormant when not wanted
-	print("I am not dormant")
-	gotClosestTarget = false
+
 func setAllConditionsToFalse():
 	animTree.set("parameters/conditions/finishedAttack",false)
 	animTree.set("parameters/conditions/firstAttack", false)
@@ -203,14 +189,9 @@ func setAllConditionsToFalse():
 
 
 func onVisibleOnScreen():
-	if(isDormant):
-		howlSound.play()
-		startApproaching()
 	if(stateMachine.get_current_node() == "WolfIntoCrouch"):
-		print("You see me baeeeee. Am coming for ya haha")
 		animTree.set("parameters/conditions/isStalking", true)
 	elif(stateMachine.get_current_node() == "WolfStalking"):
-		print("NYA NYAH NYAH HNGHNG")
 		animTree.set("parameters/conditions/isSprinting", true)
 
 func footSteps():
@@ -234,18 +215,39 @@ func getStartPosition():
 	startPos = possibleTargets[randi_range(0, possibleTargets.size() - 1)]
 	return Vector2(startPos)
 
-
-func onPlayerRanTooLong():
-	if(isDormant):
-		#Play the roar sound
-		print("Roar")
-		startApproaching()
-	elif(stateMachine.get_current_node() == "WolfIntoCrouch"):
-		print("You have run too much, B :3")
-		animTree.set("parameters/conditions/isStalking", true)
-
 func stopAllSounds():
 	wolfHitSound.stop()
 	howlSound.stop()
 	howlSprintBark.stop()
 	stalkGrowl.stop()
+
+func goDormant():
+	howlSound.play()
+	isDormant = true
+	setAllConditionsToFalse()
+	animTree.set("parameters/conditions/goDormant", true) #The wolf will just stand around.
+	canAttack = false
+	isRunningAway = false
+	self.visible = false
+	wentDormant.emit()
+
+func spawnIntoTheWorld():
+	var closestTargetPos = getStartPosition()
+	global_position = Vector3(closestTargetPos.x, global_position.y, closestTargetPos.y)
+	self.visible = true
+	canAttack = true
+	isDormant = false
+	gotClosestTarget = false
+	print("I have spawned into the world")
+
+func onGunShotForNoFukenReasonAtAll():
+	if(stateMachine.get_current_node() == "WolfStandingPose"):
+		var attackChance = randf_range(0, 1)
+		if(attackChance > 0.5):
+			sprintAtTheMf()
+
+func sprintAtTheMf():
+	animTree.set("parameters/conditions/goDormant", false)
+	animTree.set("parameters/conditions/isCrouching", true)
+	animTree.set("parameters/conditions/isStalking", true)
+	animTree.set("parameters/conditions/isSprinting", true) #Start sprinting at them

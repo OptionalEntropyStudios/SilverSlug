@@ -14,7 +14,8 @@ extends Node3D
 signal gunReadied #We shall emit this, when the player is holding their gun up, when the wolf is stalking
 var wolfOnScreen : bool
 @export var gunReadiedThreshold : float = -7.0 #The limit at which the gun will register as readied
-signal gunShot #We shall emit this, if the player shoots their gun
+signal gunShot #We shall emit this, if the player hits the wolf
+signal gunFiredForNoReasonAtAll
 @onready var gunSound = $shotgun/GunShotSFX
 @onready var emptyClickSound = $shotgun/EmptyClickSound
 
@@ -38,7 +39,6 @@ var gunDrawn : bool
 var reloading : bool
 var reloadFunctionCalled : bool
 var isReloadSoundQueued : bool
-signal canAimGun
 @onready var gunReloadSFX = $shotgun/GunReloadSound
 @export var reloadTime : float = 4 #How long reloading takes after the gun is lowered
 @export var reloadSoundDelay : float = 1.5
@@ -81,7 +81,6 @@ func _process(delta):
 				if(!gun_clip_check_ray.is_colliding()):
 					_readyPosition()
 					if(Input.is_action_just_pressed("reloadButton") and reserveAmmo > 0):
-						print("Pressed the reload buton and we have ammo to reload with")
 						if(isReloadSoundQueued == false):
 							reloading = true
 							isReloadSoundQueued = true
@@ -138,8 +137,8 @@ func shootGun(): #Fire the gun and decrease the ammo amount
 		if(shoot_ray.is_colliding()):
 			var hit_object = shoot_ray.get_collider()
 			if(hit_object.is_in_group("wolf")):
-				print("We hit " + hit_object.name)
 				gunShot.emit()
+			else: gunFiredForNoReasonAtAll.emit()
 	else:
 		emptyClickSound.play()
 		pass
@@ -149,7 +148,6 @@ func reloadGun():#Lower the gun and "reload it" and return it back up.
 	else:
 		reloadFunctionCalled = true
 		@warning_ignore("redundant_await")
-		print("We gonna wait for the reload time to go now")
 		await get_tree().create_timer(reloadTime).timeout
 		loadedAmmo = 1
 		reserveAmmo -= 1

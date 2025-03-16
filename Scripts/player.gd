@@ -120,8 +120,8 @@ func _physics_process(delta):
 				if(timeSinceLastStep <= maxAllowedSprinting):
 					timeSprinting += delta #When running, add elapsed seconds to keep track of how much the player has been running
 				if(timeSprinting > maxAllowedSprinting):
-					print("I have sprinted too much")
 					playerRanTooLong.emit() #If the player has run too long, emit this signal
+					timeSprinting = 0.0
 			elif(arm.gunDrawn):
 				running = false
 				if(Input.is_action_pressed("aimButton")  and not arm.reloading and arm.canHoldGunUp):

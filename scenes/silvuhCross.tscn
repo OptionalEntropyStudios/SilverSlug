@@ -49,6 +49,7 @@ size = Vector3(2.37012, 1.29211, 2.11499)
 
 [node name="Cross" type="StaticBody3D" groups=["inspectable", "x"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0220038, 0)
+collision_layer = 128
 script = ExtResource("1_2dqfo")
 viewableText = "My silver cross. It's broken now..."
 

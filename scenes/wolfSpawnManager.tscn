@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c838fdm8drhf4"]
+
+[ext_resource type="Script" uid="uid://d4nu2abc44ji0" path="res://Scripts/wolfSpawnManager.gd" id="1_ayx0w"]
+
+[node name="WolfSpawnManager" type="Node"]
+script = ExtResource("1_ayx0w")
