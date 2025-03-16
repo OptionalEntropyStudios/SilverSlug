@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdh52c16rteyk"]
 
-[ext_resource type="Script" path="res://Scripts/shakeable_camera.gd" id="1_tqtvw"]
+[ext_resource type="Script" uid="uid://5pi75j263pqy" path="res://Scripts/shakeable_camera.gd" id="1_tqtvw"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_c7l26"]
 

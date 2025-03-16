@@ -2,15 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nmjy8r6sxfuu"
+uid="uid://vjyy88om7my5"
 path.s3tc="res://.godot/imported/koivu2_koivuTrunk.jpg-8516f53de9f2226c87255296e508af4b.s3tc.ctex"
 path.etc2="res://.godot/imported/koivu2_koivuTrunk.jpg-8516f53de9f2226c87255296e508af4b.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "cbfdcba6349d802e984d7e2b44724a2e"
 }
 
 [deps]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://lyiytg6i1v85"]
 
-[ext_resource type="Script" path="res://Scripts/door_trigger.gd" id="1_66j7l"]
+[ext_resource type="Script" uid="uid://40c35pd1uy7l" path="res://Scripts/door_trigger.gd" id="1_66j7l"]
 [ext_resource type="AudioStream" uid="uid://cwd8ehym57blk" path="res://SFX/door.wav" id="2_7o6jn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vhdpy"]
@@ -15,3 +15,4 @@ shape = SubResource("BoxShape3D_vhdpy")
 
 [node name="doorOpenSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_7o6jn")
+volume_db = -11.458

@@ -18,7 +18,9 @@ var gettingUp : bool = false
 var pouncePosition : Node3D
 #wuba luba dub dub here will be the blood effect 
 @onready var attackScreamSFX = $AttackScreamSFX
-@onready var footStepSFX = $footSteps
+@onready var outdoorFootstep: AudioStreamPlayer3D = $outdoorFootstep
+@onready var indoorFootstep: AudioStreamPlayer3D = $indoorFootstep
+var isIndoors : bool
 var footStepStartPitch
 var footStepPitch
 
@@ -33,7 +35,9 @@ var timeSinceLastStep : float
 
 @onready var inspect_text = $CanvasLayer/InspectText
 @export var inspectTextShowTime = 0.0
-#@export var inspectTextShowTimeLimit = 7.0
+
+@onready var shellPickupSound = $shellPickupSound
+
 @onready var interactXhair = $CanvasLayer/Crosshair/XhairHandInteract
 @onready var pickupXhair = $CanvasLayer/Crosshair/XhairHandPickup
 @onready var xhair_pointer = $CanvasLayer/Crosshair/Xhair_pointer
@@ -55,7 +59,8 @@ func _ready():
 	theCross = get_tree().get_first_node_in_group("x")
 	theCross.hide()
 	crossDropped = false
-	footStepStartPitch = footStepSFX.volume_db
+	isIndoors = false #Player starts outdoors
+	footStepStartPitch = outdoorFootstep.volume_db
 func _process(delta):
 	checkCrosshairStatus()
 	if(beingAttacked):
@@ -171,6 +176,7 @@ func checkCrosshairStatus():
 				xhair_pointer.hide()
 				if(Input.is_action_just_pressed("useButton")):
 					arm.reserveAmmo += 1
+					shellPickupSound.play()
 					arm.updateAmmoText()
 					target.queue_free()
 			elif(target.is_in_group("interactable")):
@@ -178,6 +184,7 @@ func checkCrosshairStatus():
 				xhair_pointer.hide()
 				if(Input.is_action_just_pressed("useButton")):
 					target.LoadNextScene(self)
+					isIndoors = !isIndoors
 			elif(target.is_in_group("gas")):
 				pickupXhair.show()
 				xhair_pointer.hide()
@@ -218,12 +225,17 @@ func footSteps(runnin : bool):
 	if (velocity.normalized() != Vector3.ZERO):
 		timeSinceLastStep += get_process_delta_time()
 		footStepPitch = (footStepStartPitch - randi_range(25, 45))
-		footStepSFX.volume_db = footStepPitch
+		outdoorFootstep.volume_db = footStepPitch
+		indoorFootstep.volume_db = footStepPitch
 		if(runnin):
 			if timeSinceLastStep >= stepWalkInterval / 2:
 				timeSinceLastStep = 0.0
-				footStepSFX.play()
+				if(isIndoors):
+					indoorFootstep.play()
+				else: outdoorFootstep.play()
 		else:
 			if timeSinceLastStep >= stepWalkInterval:
 				timeSinceLastStep = 0.0
-				footStepSFX.play()
+				if(isIndoors):
+					indoorFootstep.play()
+				else: outdoorFootstep.play()

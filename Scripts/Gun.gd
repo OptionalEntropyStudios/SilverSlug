@@ -16,6 +16,8 @@ var wolfOnScreen : bool
 @export var gunReadiedThreshold : float = -7.0 #The limit at which the gun will register as readied
 signal gunShot #We shall emit this, if the player shoots their gun
 @onready var gunSound = $shotgun/GunShotSFX
+@onready var emptyClickSound = $shotgun/EmptyClickSound
+
 var readyRotation = basis.get_euler()
 var readyPosition = self.position
 var holsteredRotation
@@ -139,7 +141,7 @@ func shootGun(): #Fire the gun and decrease the ammo amount
 				print("We hit " + hit_object.name)
 				gunShot.emit()
 	else:
-		#play CLICK sound
+		emptyClickSound.play()
 		pass
 func reloadGun():#Lower the gun and "reload it" and return it back up.
 	if(reloading and self.position.y > (holsteredPosition.y + 0.02)):

@@ -199,6 +199,7 @@ func setAllConditionsToFalse():
 	animTree.set("parameters/conditions/isHit", false)
 	animTree.set("parameters/conditions/isSprinting", false)
 	animTree.set("parameters/conditions/secondAttack", false)
+	animTree.set("parameters/conditions/isStalking", false)
 
 
 func onVisibleOnScreen():
