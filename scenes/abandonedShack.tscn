@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://6vqse2h1fqbv"]
+
+[ext_resource type="Script" uid="uid://cl2tllno7j0h6" path="res://Scripts/viewable.gd" id="1_486gw"]
+[ext_resource type="PackedScene" uid="uid://bkh64pttq5vka" path="res://Models/shack/abandonedShack.glb" id="1_dondm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dondm"]
+size = Vector3(8.27051, 4.51996, 5.93848)
+
+[node name="abandonedShack" type="StaticBody3D"]
+script = ExtResource("1_486gw")
+viewableText = "an old storage shack.\\n This one seems to still be standing..."
+
+[node name="abandonedShack2" parent="." instance=ExtResource("1_dondm")]
+
+[node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0358, 0)
+shape = SubResource("BoxShape3D_dondm")

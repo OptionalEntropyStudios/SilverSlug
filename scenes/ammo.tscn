@@ -6,6 +6,8 @@
 size = Vector3(0.0354004, 0.0390625, 0.102539)
 
 [node name="Ammo" type="RigidBody3D" groups=["ammo"]]
+mass = 0.25
+gravity_scale = 0.7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0126953)

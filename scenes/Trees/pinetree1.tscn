@@ -41,7 +41,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ydmrm")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vcntv"]
-radius = 0.173843
+radius = 0.144043
 
 [node name="pinetree_v1_1" type="StaticBody3D"]
 
@@ -51,5 +51,5 @@ mesh = SubResource("ArrayMesh_eqwlg")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0122872, 0.803943, -0.0199366)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552446, 0.803943, -0.0199366)
 shape = SubResource("CylinderShape3D_vcntv")

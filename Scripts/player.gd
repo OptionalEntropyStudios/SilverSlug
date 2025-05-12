@@ -13,6 +13,8 @@ var theCross
 @onready var crossPos = $crossPos
 var crossDropped : bool = false
 @onready var shakeable_camera = $Head/shakeable_camera
+@onready var camera: Camera3D = $Head/shakeable_camera/Camera
+
 var beingAttacked : bool = false #Is true, if we are.... being attacked -_-
 var gettingUp : bool = false
 var pouncePosition : Node3D
@@ -24,7 +26,7 @@ var isIndoors : bool
 var footStepStartPitch
 var footStepPitch
 
-@export var stepWalkInterval : float
+@export var stepWalkInterval : float = 0.8
 var timeSinceLastStep : float
 # and sounds too haha
 
@@ -42,32 +44,40 @@ var timeSinceLastStep : float
 @onready var pickupXhair = $CanvasLayer/Crosshair/XhairHandPickup
 @onready var xhair_pointer = $CanvasLayer/Crosshair/Xhair_pointer
 @onready var xhair_eye = $CanvasLayer/Crosshair/Xhair_eye
-@export var SPEED = 150.0
-@export var runSpeed = 1.75
 
+var currentSpeed : float
+@export var baseSpeed = 150.0
+@export var runSpeed = 1.75
+@export var gunHoldingSpeed = 0.45
+enum movementStates {WALKING, RUNNING, GUNDRAWN}
+var currentMovementState : movementStates
 #The run limit in a certain time
 var maxAllowedSprinting : float = 7.5
 var timeSprinting : float = 0.0
 var running = false
-signal playerRunning
 signal playerRanTooLong
 signal playerIndoors
 signal playerOutdoors
-@export var gunHoldingSpeed = 0.45
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	theCross = get_tree().get_first_node_in_group("x")
-	theCross.hide()
+	if(theCross != null):
+		theCross.hide()
 	crossDropped = false
 	isIndoors = false #Player starts outdoors
 	footStepStartPitch = outdoorFootstep.volume_db
+	gasBar.modulate.a = 0
 func _process(delta):
+	checkGasBarOpacity(delta)
 	checkCrosshairStatus()
+	checkCurrentMovementState()
+
+	getPlayerMoveSpeed()
 	if(beingAttacked):
 		gettingUp = true
-		emitBlood()
 		head.global_position = pouncePosition.global_position #Set the head's pos to the attacked position
 		head.rotation_degrees.x = lerpf(head.rotation_degrees.x, pouncePosition.rotation_degrees.x, 0.1) #Rotate the head to point that way
 		var wolf = get_tree().get_first_node_in_group("wolf")
@@ -78,101 +88,78 @@ func _process(delta):
 			crossDropped = true
 			theCross.global_position = crossPos.global_position
 			theCross.show()
-			print("My cross is broken :(")
 			#Then also play the cross broke sound
-			
-		blood.emitting = false
-		if(head.position.y < 1.45):
-			head.position = lerp(head.position, headPos.position, 0.4 * delta)
-			head.rotation_degrees.x = lerpf(head.rotation_degrees.x, 0, 0.6 * delta)
+		if(head.position.y < headPos.position.y - 0.05):
+			head.position = lerp(head.position, headPos.position, 0.7 * delta)
+			head.rotation_degrees.x = lerpf(head.rotation_degrees.x, 0, 0.8 * delta)
 		else: 
 			gettingUp = false
 			timeSprinting = 0.0
-			head.position = Vector3(0,1.5,0)
-	head.rotation_degrees.x = clampf(head.rotation_degrees.x, -88, 88) #Limit head roatation to look straight up and down
+			head.position = headPos.position
+			head.rotation_degrees.x = 0
+	head.rotation_degrees.x = clampf(head.rotation_degrees.x, -90, 90) #Limit head roatation to look straight up and down'
+	head.rotation_degrees.y = 0.0
+	head.rotation_degrees.z = 0.0
+	rotation_degrees.x = 0.0
+	rotation_degrees.z = 0.0
+	if(Input.is_key_pressed(KEY_CTRL)):
+		pass
+var mouseInput
 func _input(event):
-	if(not beingAttacked):
-		if event is InputEventMouseMotion: #If mouse is moved
-			if(Input.is_action_pressed("aimButton")): #If user is not aiming, allow looking around with camera
-				if(arm.gunDrawn == true and not arm.reloading and arm.canHoldGunUp == true):
-					#xhair_pointer.hide()
-					pass
+	var aiming = Input.is_action_pressed("aimButton")
+	if event is InputEventMouseMotion: #If mouse is moved
+		mouseInput = Vector2(event.screen_relative.x, event.screen_relative.y)
+		if(!beingAttacked and !gettingUp):
+			if(mouseInput):
+				if(aiming): #If user is not aiming, allow looking around with camera
+					if(arm.gunDrawn and not arm.reloading and arm.canHoldGunUp):
+						pass
+					else:
+						if(head.rotation_degrees.x < 90 and head.rotation_degrees.x > -90):
+							head.rotate_x(deg_to_rad(-mouseInput.y * lookSensitivity * get_process_delta_time()))
+						player.rotate_y(deg_to_rad(-mouseInput.x * lookSensitivity * get_process_delta_time()))
+						head.rotation_degrees.x = clampf(head.rotation_degrees.x, -90, 90)
+						head.rotation_degrees.y = 0.0
 				else:
-					head.rotate_x(deg_to_rad(-event.relative.y*lookSensitivity*get_process_delta_time()))
-					player.rotate_y(deg_to_rad(-event.relative.x*lookSensitivity*get_process_delta_time()))
-			else:
-				xhair_pointer.show()
-				head.rotate_x(deg_to_rad(-event.relative.y*lookSensitivity*get_process_delta_time()))
-				player.rotate_y(deg_to_rad(-event.relative.x*lookSensitivity*get_process_delta_time()))
+					xhair_pointer.show()
+					head.rotate_x(deg_to_rad(-mouseInput.y * lookSensitivity * get_process_delta_time()))
+					player.rotate_y(deg_to_rad(-mouseInput.x * lookSensitivity * get_process_delta_time()))
+					head.rotation_degrees.x = clampf(head.rotation_degrees.x, -90, 90)
+	#head.rotation_degrees.x = clampf(head.rotation_degrees.x, -90, 90)
 func _physics_process(delta):
-	if(not beingAttacked and not gettingUp): #If the player is being attacked, they're not supposed to be able to move :D
-		# Add the gravity.
-		if not is_on_floor():
-			velocity.y -= gravity * delta
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var input_dir = Input.get_vector("moveLeft", "moveRight", "moveForward", "moveBack")
-		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if direction: #If user is moving
-			if(Input.is_action_pressed("runButton") and Input.is_action_pressed("moveForward") and arm.gunDrawn == false): #if user is pressing run key and moving forward
-				playerRunning.emit() #If the player is running, emit the runnin signal
-				velocity.x = direction.x * SPEED * runSpeed *get_process_delta_time()
-				velocity.z = direction.z * SPEED * runSpeed *get_process_delta_time()
-				running = true
-				if(timeSinceLastStep <= maxAllowedSprinting):
-					timeSprinting += delta #When running, add elapsed seconds to keep track of how much the player has been running
-				if(timeSprinting > maxAllowedSprinting):
-					playerRanTooLong.emit() #If the player has run too long, emit this signal
-					timeSprinting = 0.0
-			elif(arm.gunDrawn):
-				running = false
-				if(Input.is_action_pressed("aimButton")  and not arm.reloading and arm.canHoldGunUp):
-					if(timeSprinting > 0.0):
-						timeSprinting -= delta
-					velocity.x = move_toward(velocity.x, 0, SPEED)
-					velocity.z = move_toward(velocity.z, 0, SPEED)
-				else:
-					if(timeSprinting > 0.0):
-						timeSprinting -= delta
-					velocity.x = direction.x * SPEED * gunHoldingSpeed *get_process_delta_time()
-					velocity.z = direction.z * SPEED * gunHoldingSpeed *get_process_delta_time()
-			else:
-				running = false
-				if(timeSprinting > 0.0):
-					timeSprinting -= delta
-				velocity.x = direction.x * SPEED *get_process_delta_time()
-				velocity.z = direction.z * SPEED *get_process_delta_time()
-		else:
-			if(timeSprinting > 0.0):
-				timeSprinting -= delta
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
-		footSteps(running)
+	if(!beingAttacked and !gettingUp): #If the player is being attacked, they're not supposed to be able to move :D
+		doMovementStuff(delta)
+		footSteps(delta)
 		move_and_slide()
+
 func ShowInspectText(showableText):
 	inspect_text.text = showableText
-	var textShowLimit = showableText.length() / 5
+	var textShowLimit = showableText.length() / 10
 	inspect_text.show()
 	await get_tree().create_timer(textShowLimit).timeout
 	inspect_text.hide()
 func updateGasAmount(gasAmount : float):
 	gasBar.set_value_no_signal(gasBar.value + gasAmount)
-	gasBar.visible = true
-	await get_tree().create_timer(gasBarVisibleLimit).timeout
-	gasBar.visible = false
+	gasBar.modulate.a = 1
+	
+func checkGasBarOpacity(delta):
+	var gasMeterChecked = Input.is_action_pressed("checkGasMeter")
+	if(!gasMeterChecked):
+		if(gasBar.modulate.a > 0):
+			gasBar.modulate.a -= delta / 2
+	else: gasBar.modulate.a = 1
 func getAttacked(wolfAttackPosition : Node3D): #Called, if wolf reaches player
-	print("We're getting attacked HUEEEEUUUGH")
 	attackScreamSFX.play()
 	beingAttacked = true
 	pouncePosition = wolfAttackPosition
 func attackOver():
-	print("We made it bois")
+	print("We are not being attacked anymore")
 	beingAttacked = false
 
 func checkCrosshairStatus():
 	if(interact_ray.is_colliding()):
 		var target = interact_ray.get_collider()
-		if(interact_ray.get_collider() != null):
+		if(target != null):
 			if(target.is_in_group("ammo")):
 				pickupXhair.show()
 				xhair_pointer.hide()
@@ -186,12 +173,10 @@ func checkCrosshairStatus():
 				xhair_pointer.hide()
 				if(Input.is_action_just_pressed("useButton")):
 					target.LoadNextScene(self)
-					isIndoors = not isIndoors
+					isIndoors = !isIndoors
 					if(isIndoors):
-						print("I went indoors and emitted the indoors signal")
 						playerIndoors.emit()
 					else: 
-						print("I just came down from the high of my li- I mean I came out the house, emitting outdoors signal")
 						playerOutdoors.emit()
 			elif(target.is_in_group("gas")):
 				pickupXhair.show()
@@ -220,8 +205,11 @@ func checkCrosshairStatus():
 		hideAllCrosshairs()
 
 func emitBlood():
-	await get_tree().create_timer(1.35).timeout
-	blood.emitting = true
+	if(blood.emitting):
+		blood.emitting = false
+		blood.emitting = true
+	else:
+		blood.emitting = true
 	shakeable_camera._addTrauma(0.5)
 
 func hideAllCrosshairs():
@@ -229,21 +217,61 @@ func hideAllCrosshairs():
 	pickupXhair.hide()
 	interactXhair.hide()
 
-func footSteps(runnin : bool):
+func footSteps(delta):
 	if (velocity.normalized() != Vector3.ZERO):
-		timeSinceLastStep += get_process_delta_time()
-		footStepPitch = (footStepStartPitch - randi_range(25, 45))
+		timeSinceLastStep += delta
+		footStepPitch = (footStepStartPitch - randi_range(20, 50))
 		outdoorFootstep.volume_db = footStepPitch
 		indoorFootstep.volume_db = footStepPitch
-		if(runnin):
-			if timeSinceLastStep >= stepWalkInterval / 2:
-				timeSinceLastStep = 0.0
-				if(isIndoors):
-					indoorFootstep.play()
-				else: outdoorFootstep.play()
-		else:
-			if timeSinceLastStep >= stepWalkInterval:
-				timeSinceLastStep = 0.0
-				if(isIndoors):
-					indoorFootstep.play()
-				else: outdoorFootstep.play()
+		var currentStepInterval
+		if(currentMovementState == movementStates.RUNNING):
+			currentStepInterval = stepWalkInterval / 2
+		else: currentStepInterval = stepWalkInterval
+		if timeSinceLastStep >= currentStepInterval:
+			timeSinceLastStep = 0.0
+			if(isIndoors):
+				indoorFootstep.play()
+			else: outdoorFootstep.play()
+
+#FOR DEBUG
+var prevMovementState : movementStates
+func checkCurrentMovementState():
+	if(arm.gunDrawn):
+		currentMovementState = movementStates.GUNDRAWN
+	elif(Input.is_action_pressed("runButton") and Input.is_action_pressed("moveForward") and not Input.is_action_pressed("moveBack")):
+		currentMovementState = movementStates.RUNNING
+	else: currentMovementState = movementStates.WALKING
+	if(currentMovementState != prevMovementState):
+		print("Movementstate: " + str(movementStates.keys()[currentMovementState]))
+		prevMovementState = currentMovementState
+
+func getPlayerMoveSpeed():
+	match currentMovementState:
+		movementStates.RUNNING:
+			currentSpeed = baseSpeed * runSpeed
+		movementStates.GUNDRAWN:
+			currentSpeed = baseSpeed * gunHoldingSpeed
+		movementStates.WALKING:
+			currentSpeed = baseSpeed
+		_:
+			currentSpeed = baseSpeed
+
+func doMovementStuff(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	var input_dir = Input.get_vector("moveLeft", "moveRight", "moveForward", "moveBack")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction: #If user is moving
+		velocity.x = direction.x * currentSpeed * delta
+		velocity.z = direction.z * currentSpeed * delta
+	else:
+		velocity.x = move_toward(velocity.x, 0, baseSpeed)
+		velocity.z = move_toward(velocity.z, 0, baseSpeed)
+	if(currentMovementState == movementStates.RUNNING):
+		timeSprinting += delta
+	else:
+		if(timeSprinting > 0.0):
+			timeSprinting -= delta
+	if(timeSprinting > maxAllowedSprinting):
+		playerRanTooLong.emit()
+		timeSprinting = 0.0

@@ -39,6 +39,119 @@ size = Vector3(250, 4, 250)
 
 [node name="WOLFTESTPLAYGROUND" type="Node3D"]
 
+[node name="Player" parent="." instance=ExtResource("2_e4ot6")]
+transform = Transform3D(0.0102276, 0, 0.999948, 0, 1, 0, -0.999948, 0, 0.0102276, 0.968132, -9.78453, 0)
+baseSpeed = 450.0
+
+[node name="Arm" parent="Player/Head" index="2"]
+reloadSoundDelay = 1.55
+
+[node name="WerewolfPS1_animated" parent="." instance=ExtResource("1_20rmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.627469, -9.8196, 46.9988)
+playerPath = NodePath("../Player")
+minEscapeDistance = 40.0
+sprintInterval = 0.45
+stalkInterval = 1.0
+
+[node name="Skeleton3D" parent="WerewolfPS1_animated/WolfBones" index="0"]
+bones/0/position = Vector3(0.0206711, 0.955506, -0.0247763)
+bones/3/rotation = Quaternion(0.0417053, 0.0699235, -0.622282, 0.778548)
+bones/4/rotation = Quaternion(-0.0156507, -0.126748, 0.647445, 0.751335)
+bones/7/rotation = Quaternion(0.0417065, -0.0699184, 0.622282, 0.778548)
+bones/8/rotation = Quaternion(-0.0156534, 0.126736, -0.647446, 0.751337)
+bones/10/rotation = Quaternion(0.678216, -0.0170119, 0.732558, 0.0556121)
+bones/11/rotation = Quaternion(-0.0396311, -0.00505911, 0.00540765, 0.999187)
+bones/12/rotation = Quaternion(-0.259953, 0.627282, -0.28179, 0.677891)
+bones/13/rotation = Quaternion(-1.15778e-07, -7.00557e-08, 0.0447142, 0.999)
+bones/14/rotation = Quaternion(4.32164e-05, -2.55724e-05, -0.934011, 0.357245)
+bones/15/rotation = Quaternion(0.471287, 0.0758032, 0.763839, -0.434388)
+bones/18/rotation = Quaternion(0.166961, 0.015057, -0.133877, 0.976716)
+bones/19/rotation = Quaternion(-0.186871, -0.00906492, -0.250668, 0.949822)
+bones/21/rotation = Quaternion(-0.0420807, 0.0767697, -0.299092, 0.9502)
+bones/23/rotation = Quaternion(-0.0237142, 0.118581, -0.343502, 0.931334)
+bones/25/rotation = Quaternion(-0.0514974, 0.153271, -0.356259, 0.920291)
+bones/26/rotation = Quaternion(0.281218, 0.235157, -0.146812, 0.918729)
+bones/27/rotation = Quaternion(-0.216036, -0.128966, 0.194744, 0.948035)
+bones/28/rotation = Quaternion(0.730213, 0.389015, 0.55377, -0.0937865)
+bones/29/rotation = Quaternion(0.211919, -0.00512128, 0.0423024, 0.976358)
+bones/31/rotation = Quaternion(-0.0246484, -0.0406354, 0.0509749, 0.997568)
+bones/33/rotation = Quaternion(-0.0904755, -0.0475983, 0.0228029, 0.994499)
+bones/35/rotation = Quaternion(-0.174832, -0.037797, 0.0390486, 0.983097)
+bones/37/rotation = Quaternion(-0.207444, -0.0359697, 0.049627, 0.976325)
+bones/39/rotation = Quaternion(0.217109, -0.194687, 0.299883, 0.908312)
+
+[node name="Physical Bone Bone_004" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="1"]
+transform = Transform3D(0.996807, -0.0798553, 4.91404e-06, -8.33233e-06, -4.24728e-05, 1, -0.0798553, -0.996807, -4.30026e-05, 0.0210909, 0.891999, -0.0250053)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000437309, -0.000197258, 0.0635071)
+body_offset = Transform3D(-1, -1.62721e-05, -8.33541e-06, -8.33471e-06, -4.25324e-05, 1, -1.62721e-05, 1, 4.25323e-05, -0.000436783, -0.0635071, 0.00019455)
+
+[node name="Physical Bone Femur_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="2"]
+transform = Transform3D(0.00799341, -0.99913, -0.040928, -0.393904, -0.0407662, 0.918247, -0.919117, 0.0087818, -0.393887, 0.13589, 0.473753, 0.122917)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00412862, -0.000555158, 0.384586)
+body_offset = Transform3D(1, 2.64402e-06, 6.24359e-05, 6.23763e-05, 2.19049e-05, -1, -2.67755e-06, 1, 2.19014e-05, 0.00410461, 0.384586, 0.000546724)
+
+[node name="Physical Bone Shin_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="3"]
+transform = Transform3D(0.123096, -0.991618, -0.0392662, 0.797526, 0.0753, 0.598567, -0.590593, -0.104997, 0.80011, 0.145588, -0.0125456, 0.072567)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0059906, -0.0168071, 0.246658)
+body_offset = Transform3D(0.999897, -0.000451151, 0.014325, 0.014326, 0.00210713, -0.999895, 0.000420902, 0.999998, 0.00211341, 0.00244904, 0.246754, 0.0162883)
+
+[node name="Physical Bone Ankle_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="4"]
+transform = Transform3D(-0.115877, -0.990512, -0.0738863, -0.453988, -0.0133459, 0.890908, -0.883441, 0.136779, -0.448134, 0.198285, -0.438211, -0.0217628)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0201912, 0.00750136, 0.293017)
+body_offset = Transform3D(0.999997, -0.00091432, -0.00213787, -0.00213701, 0.000941418, -0.999997, 0.000916339, 0.999999, 0.000939488, 0.0208244, 0.292966, -0.00775814)
+
+[node name="Physical Bone Femur_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="5"]
+transform = Transform3D(0.0073776, 0.999195, 0.0394362, 0.393875, -0.0391528, 0.91833, 0.919134, 0.00875788, -0.393847, -0.0815419, 0.467161, 0.13456)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00409398, -0.0133334, 0.394712)
+body_offset = Transform3D(1, -4.62588e-06, -1.74344e-05, -1.74344e-05, -3.22738e-05, -1, 4.67058e-06, 1, -3.22871e-05, 0.0041008, 0.394711, 0.0133462)
+
+[node name="Physical Bone Shin_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="6"]
+transform = Transform3D(0.124103, 0.991541, 0.0380135, -0.795321, 0.0764892, 0.601344, 0.593349, -0.104861, 0.798086, -0.120597, -0.0039711, 0.0817261)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0104437, 0.000988543, 0.234817)
+body_offset = Transform3D(0.999843, 0.000821769, -0.0177243, -0.0177261, 0.00221647, -0.999841, -0.000782326, 0.999997, 0.00223073, -0.0062809, 0.234962, -0.00150418)
+
+[node name="Physical Bone Ankle_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="7"]
+transform = Transform3D(-0.116407, 0.990429, 0.0741567, 0.454534, -0.0132624, 0.890631, 0.88309, 0.137382, -0.44864, -0.146387, -0.386519, -0.0253258)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00102783, -0.00027426, 0.244632)
+body_offset = Transform3D(0.999999, 0.000802912, 0.0013195, 0.00131747, 0.00253284, -0.999996, -0.000806175, 0.999996, 0.00253182, -0.0013504, 0.24463, -0.000344276)
+
+[node name="Physical Bone Bone_001" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="8"]
+transform = Transform3D(0.00217465, -0.999997, -0.000548709, -0.709074, -0.00115508, -0.705133, 0.705131, 0.0019225, -0.709075, 0.020368, 1.51175, 0.147911)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00074865, -0.00043797, 0.242791)
+body_offset = Transform3D(0.999999, -1.45868e-07, -0.00127652, -0.00127637, -0.000100866, -0.999999, -3.49246e-10, 1, -0.00010092, 0.00105858, 0.24279, 0.000462472)
+
+[node name="Physical Bone Bone_002" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="9"]
+transform = Transform3D(-0.999998, -0.00153602, -0.0016148, -0.00125028, 0.986449, -0.164063, 0.00184492, -0.16406, -0.986449, 0.0344104, 1.69058, 0.382092)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0133203, -0.00423224, 0.0745054)
+body_offset = Transform3D(-7.34138e-06, -0.759314, -0.650725, -0.00022348, 0.650725, -0.759314, 1, 0.000139895, -0.000174503, 0.045269, 0.05933, -0.0133067)
+
+[node name="Physical Bone Arm_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="10"]
+transform = Transform3D(-0.779845, -0.550885, -0.297268, -0.295057, -0.0953333, 0.950712, -0.552073, 0.829118, -0.0881971, 0.349577, 1.27795, 0.243336)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0129596, 0.0123181, 0.296601)
+body_offset = Transform3D(0.99994, 0.0104028, 0.00360535, 0.00361298, -0.000716411, -0.999993, -0.0104001, 0.999946, -0.000753902, -0.0141563, 0.296561, -0.0119591)
+
+[node name="Physical Bone Forearm_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="11"]
+transform = Transform3D(-0.842318, -0.537609, -0.0384336, -0.0837251, 0.0600701, 0.994677, -0.532438, 0.841052, -0.0956095, 0.454474, 0.687637, 0.309273)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0106515, -0.00445835, 0.243459)
+body_offset = Transform3D(0.999999, 0.0014382, -5.92321e-07, -1.35601e-06, 0.000544362, -1, -0.00143814, 0.999999, 0.000544392, -0.0106449, 0.243461, 0.00434113)
+
+[node name="Physical Bone Arm_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="12"]
+transform = Transform3D(-0.87895, 0.374043, 0.295869, 0.269902, -0.121342, 0.955212, 0.393191, 0.919439, 0.00569805, -0.298031, 1.26988, 0.224941)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00742438, -0.00249251, 0.299955)
+body_offset = Transform3D(0.999989, -0.0036118, -0.00314918, -0.00314687, 0.000652697, -0.999995, 0.00361398, 0.999994, 0.000641289, 0.00835991, 0.299932, 0.00232697)
+
+[node name="Physical Bone Forearm_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="13"]
+transform = Transform3D(-0.891154, 0.452099, 0.0381102, 0.187956, 0.291424, 0.937947, 0.412938, 0.843018, -0.344678, -0.406649, 0.695045, 0.292797)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00300311, 0.00811665, 0.242575)
+body_offset = Transform3D(0.999998, 2.70307e-05, -0.00197838, -0.00197829, -0.00235417, -0.999995, -3.16203e-05, 0.999997, -0.00235417, -0.00252342, 0.242599, -0.00754547)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="TheSun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.179184, 0.466791, 0.358559, 0.4281, 0.829558, -0.348476, 0.88579, -0.306497, 0, 2.46259, -3.2977)
+light_color = Color(0.262932, 0.262932, 0.262932, 1)
+shadow_enabled = true
+
 [node name="WolfNavMesh" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0112538, -9.72337, 0.00808334)
 navigation_mesh = SubResource("NavigationMesh_q6nk5")
@@ -827,131 +940,11 @@ collision_layer = 255
 transform = Transform3D(-0.366954, 0, 0.201793, 0, 1, 0, -0.214405, 0, -0.345369, -53.003, -10.3135, 44.222)
 collision_layer = 255
 
-[node name="WerewolfPS1_animated" parent="." instance=ExtResource("1_20rmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.627469, -9.8196, 46.9988)
-playerPath = NodePath("../Player")
-minEscapeDistance = 40.0
-sprintInterval = 0.45
-stalkInterval = 1.0
-
-[node name="Skeleton3D" parent="WerewolfPS1_animated/WolfBones" index="0"]
-bones/0/position = Vector3(0.0206711, 0.936647, -0.0247763)
-bones/3/rotation = Quaternion(0.0421187, 0.0698815, -0.628643, 0.773402)
-bones/3/scale = Vector3(1, 0.999999, 1)
-bones/4/rotation = Quaternion(-0.015487, -0.126032, 0.662399, 0.738311)
-bones/7/rotation = Quaternion(0.0421233, -0.069864, 0.628643, 0.773403)
-bones/7/scale = Vector3(1, 0.999999, 1)
-bones/8/rotation = Quaternion(-0.0155069, 0.126037, -0.661483, 0.739131)
-bones/10/rotation = Quaternion(0.673723, 0.082064, 0.733534, -0.0359362)
-bones/11/rotation = Quaternion(0.15879, 0.00558935, 0.00476097, 0.987285)
-bones/12/rotation = Quaternion(-0.271107, 0.622727, -0.292797, 0.67304)
-bones/13/rotation = Quaternion(-0.00703246, -0.00534747, 0.0698202, 0.997521)
-bones/14/rotation = Quaternion(0.000273039, -0.000162946, -0.907271, 0.420546)
-bones/14/scale = Vector3(0.999999, 0.999999, 1)
-bones/15/rotation = Quaternion(0.47078, 0.0788009, 0.761082, -0.439216)
-bones/18/rotation = Quaternion(0.149871, -1.18988e-05, -0.151718, 0.976996)
-bones/19/rotation = Quaternion(-0.235264, -0.122905, -0.350718, 0.898077)
-bones/20/rotation = Quaternion(0.035027, 0.0309847, -0.0670613, 0.996652)
-bones/21/rotation = Quaternion(-0.0135572, 0.123726, -0.238993, 0.963011)
-bones/21/scale = Vector3(0.999999, 1, 1)
-bones/22/rotation = Quaternion(-0.036874, 0.0325089, -0.0498169, 0.997548)
-bones/23/rotation = Quaternion(-0.0486352, 0.0813949, -0.399958, 0.911616)
-bones/24/rotation = Quaternion(-0.0784248, 0.034617, -0.0488616, 0.99512)
-bones/25/rotation = Quaternion(-0.094189, 0.0948281, -0.463552, 0.875932)
-bones/26/rotation = Quaternion(0.306421, 0.220779, -0.165216, 0.91108)
-bones/27/rotation = Quaternion(-0.278833, -0.172894, 0.116203, 0.937474)
-bones/27/scale = Vector3(1, 0.999999, 1)
-bones/28/rotation = Quaternion(0.72413, 0.400174, 0.552308, -0.102239)
-bones/29/rotation = Quaternion(0.190632, -0.00934897, 0.0527855, 0.980197)
-bones/30/scale = Vector3(1, 0.999999, 1)
-bones/31/rotation = Quaternion(-0.0239599, -0.0393339, 0.0535943, 0.9975)
-bones/33/rotation = Quaternion(-0.0907394, -0.0480501, 0.0217323, 0.994477)
-bones/34/scale = Vector3(0.999999, 1, 1)
-bones/35/rotation = Quaternion(-0.174485, -0.0373257, 0.0405189, 0.983118)
-bones/37/rotation = Quaternion(-0.206765, -0.0351558, 0.0525155, 0.976348)
-bones/39/rotation = Quaternion(0.209609, -0.195968, 0.294467, 0.911565)
-
-[node name="Physical Bone Bone_004" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="1"]
-transform = Transform3D(0.996806, -0.0798564, 2.4473e-06, -1.90532e-06, 6.86319e-06, 1, -0.0798564, -0.996806, 6.68912e-06, 0.020963, 0.982874, -0.0247269)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000286969, 7.21604e-05, -0.0462265)
-body_offset = Transform3D(-1, -1.51619e-05, -1.9076e-06, -1.9077e-06, 6.80359e-06, 1, -1.51619e-05, 1, -6.80362e-06, -0.000287056, 0.0462265, -7.24792e-05)
-
-[node name="Physical Bone Femur_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="2"]
-transform = Transform3D(0.00798612, -0.999131, -0.0409014, -0.393861, -0.0407392, 0.918267, -0.919135, 0.00877605, -0.393844, -0.240302, 0.571126, 0.21265)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12715, -0.372462, 0.297808)
-body_offset = Transform3D(1, -2.71201e-06, 1.50204e-05, 1.49608e-05, -5.18723e-06, -1, 2.67942e-06, 1, -5.18817e-06, -0.127155, 0.297804, 0.372463)
-
-[node name="Physical Bone Shin_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="3"]
-transform = Transform3D(0.123103, -0.991451, -0.0432615, 0.746828, 0.0638456, 0.661945, -0.653524, -0.113796, 0.748303, 0.0851986, -0.012145, 0.0939713)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0188828, -0.0788783, 0.21373)
-body_offset = Transform3D(0.993799, -0.0054808, 0.11106, 0.111141, 0.0178852, -0.993645, 0.00345958, 0.999825, 0.0183834, -0.00540352, 0.215881, 0.0750008)
-
-[node name="Physical Bone Ankle_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="4"]
-transform = Transform3D(-0.117882, -0.990213, -0.0747176, -0.375007, -0.02528, 0.926677, -0.919496, 0.137258, -0.368357, 0.0667867, -0.523025, 0.0208626)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00610427, -0.134344, 0.368751)
-body_offset = Transform3D(0.993724, 0.00607752, -0.111706, -0.111783, 0.0143575, -0.993629, -0.00443528, 0.999879, 0.0149468, 0.0359421, 0.369013, 0.128843)
-
-[node name="Physical Bone Femur_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="5"]
-transform = Transform3D(0.00738241, 0.999193, 0.0394954, 0.39392, -0.0392087, 0.918308, 0.919115, 0.00877872, -0.393892, -0.265013, -0.00766563, 0.0907745)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.217138, 0.152473, 0.803431)
-body_offset = Transform3D(1, -7.47573e-06, -6.69956e-05, -6.69658e-05, 2.73036e-05, -1, 7.52322e-06, 1, 2.7295e-05, -0.217083, 0.803441, -0.152496)
-
-[node name="Physical Bone Shin_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="6"]
-transform = Transform3D(0.122948, 0.991491, 0.0427762, -0.746118, 0.0639285, 0.662738, 0.654364, -0.113399, 0.747629, -0.614122, 0.0887489, 0.121597)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.146617, 0.48438, 0.150626)
-body_offset = Transform3D(0.993689, 0.00689981, -0.111962, -0.112072, 0.0184258, -0.993531, -0.00479214, 0.999807, 0.0190827, -0.13217, 0.157158, -0.486458)
-
-[node name="Physical Bone Ankle_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="7"]
-transform = Transform3D(-0.118331, 0.989985, 0.0769868, 0.366707, -0.0284826, 0.9299, 0.92278, 0.138268, -0.359664, -0.235958, -0.353358, -0.0390015)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0415291, 0.0874859, 0.20518)
-body_offset = Transform3D(0.992998, -0.0071611, 0.117922, 0.118037, 0.0187895, -0.992831, 0.00489441, 0.999798, 0.0195033, 0.0176697, 0.206967, -0.0912666)
-
-[node name="Physical Bone Bone_001" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="8"]
-transform = Transform3D(0.00479516, -0.999975, 0.00525548, -0.615717, -0.00709362, -0.787936, 0.787953, 0.000542386, -0.615735, -0.343152, 1.75623, 0.115288)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.158606, -0.360811, 0.430122)
-body_offset = Transform3D(0.987598, 0.00408328, 0.156954, 0.156978, -0.00641598, -0.987581, -0.00302556, 0.999971, -0.00697742, -0.222675, 0.397568, 0.364282)
-
-[node name="Physical Bone Bone_002" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="9"]
-transform = Transform3D(-0.998283, 0.0585732, -0.000668368, 0.0538042, 0.912372, -0.40581, -0.0231598, -0.405149, -0.913957, -0.349302, 1.9623, 0.228577)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.389537, -0.306133, 0.0450566)
-body_offset = Transform3D(-0.0439338, -0.889655, -0.454515, 0.0107058, 0.454508, -0.890678, 0.998977, -0.0439968, -0.0104438, -0.268988, 0.183441, 0.37614)
-
-[node name="Physical Bone Arm_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="10"]
-transform = Transform3D(-0.759008, -0.573895, -0.307493, -0.357416, -0.0274881, 0.933541, -0.544206, 0.818468, -0.184256, 0.103839, 1.49555, 0.199169)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.133721, -0.0588556, -0.0189261)
-body_offset = Transform3D(0.996576, 0.00974676, 0.0821124, 0.0826547, -0.0889071, -0.992605, -0.00237435, 0.995992, -0.0894082, 0.135391, -0.0129662, 0.0566101)
-
-[node name="Physical Bone Forearm_L" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="11"]
-transform = Transform3D(-0.82583, -0.562284, -0.0429138, -0.142817, 0.134923, 0.98051, -0.545534, 0.815863, -0.191727, 0.238103, 0.801291, 0.41227)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.101652, -0.21514, 0.115133)
-body_offset = Transform3D(0.997187, 0.0302057, 0.0686017, 0.0711648, -0.0940888, -0.993017, -0.0235401, 0.995106, -0.0959737, 0.099966, 0.101321, 0.222744)
-
-[node name="Physical Bone Arm_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="12"]
-transform = Transform3D(-0.872056, 0.38968, 0.296088, 0.273691, -0.113241, 0.955128, 0.405724, 0.913961, -0.00789949, -0.561361, 1.48823, 0.186996)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284571, 0.173168, 0.143357)
-body_offset = Transform3D(0.999835, -0.0160185, -0.00854172, -0.00878291, -0.0150531, -0.999848, 0.0158875, 0.999759, -0.0151914, 0.288523, 0.143442, -0.166428)
-
-[node name="Physical Bone Forearm_R" parent="WerewolfPS1_animated/WolfBones/Skeleton3D" index="13"]
-transform = Transform3D(-0.891958, 0.450832, 0.0340695, 0.272921, 0.476822, 0.835556, 0.360451, 0.75458, -0.548347, -0.899309, 0.788674, 0.3242)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.454743, 0.202227, 0.164876)
-body_offset = Transform3D(0.992259, -0.00324634, -0.124141, -0.120939, -0.252301, -0.960062, -0.0282043, 0.967643, -0.250741, 0.472347, 0.154317, -0.167168)
-
 [node name="WolfSpawnManager" parent="." instance=ExtResource("2_optrr")]
-
-[node name="Player" parent="." instance=ExtResource("2_e4ot6")]
-transform = Transform3D(0.0102276, 0, 0.999948, 0, 1, 0, -0.999948, 0, 0.0102276, 0.968132, -9.78453, 0)
-
-[node name="Arm" parent="Player/Head" index="2"]
-reloadTime = 4.0
-reloadSoundDelay = 1.55
 
 [node name="GameManager" parent="." instance=ExtResource("12_jfnrw")]
 
 [node name="SaveManager" parent="." instance=ExtResource("13_m5vv6")]
-
-[node name="TheSun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.179184, 0.46679, 0.358559, 0.4281, 0.829558, -0.348476, 0.88579, -0.306497, 0, 2.46259, -3.2977)
-shadow_enabled = true
 
 [node name="GunPickup" parent="." instance=ExtResource("14_8sdk1")]
 transform = Transform3D(-0.00703515, -0.999432, -0.0329801, 0.999325, -0.00583792, -0.0362726, 0.036059, -0.0332126, 0.998797, -1.78957, -8.91289, -0.392487)
@@ -1061,7 +1054,9 @@ fov = 98.3
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90765, -7.95007, 0.849369)
 light_color = Color(1, 1, 0.329412, 1)
-light_energy = 1.97
+light_energy = 16.0
+light_indirect_energy = 14.105
+light_volumetric_fog_energy = 12.78
 omni_range = 3.253
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
@@ -1578,24 +1573,22 @@ transform = Transform3D(0.119749, 0, 0.160188, 0, 0.2, 0, -0.160188, 0, 0.119749
 collision_layer = 0
 collision_mask = 0
 
-[connection signal="attackFinished" from="WerewolfPS1_animated" to="Player" method="attackOver"]
-[connection signal="wentDormant" from="WerewolfPS1_animated" to="WolfSpawnManager" method="resetTimeSinceWolfRanAway"]
-[connection signal="animation_finished" from="WerewolfPS1_animated/AnimationTree" to="WerewolfPS1_animated" method="_on_animation_tree_animation_finished"]
-[connection signal="screen_entered" from="WerewolfPS1_animated/WolfVisibilityCheck" to="WerewolfPS1_animated" method="onVisibleOnScreen"]
-[connection signal="screen_entered" from="WerewolfPS1_animated/WolfVisibilityCheck" to="Player/Head/Arm" method="onWolfVisibleOnScreen"]
-[connection signal="screen_exited" from="WerewolfPS1_animated/WolfVisibilityCheck" to="Player/Head/Arm" method="onWolfLeftScreen"]
-[connection signal="spawnSignal" from="WolfSpawnManager" to="WerewolfPS1_animated" method="spawnIntoTheWorld"]
 [connection signal="playerIndoors" from="Player" to="WerewolfPS1_animated" method="onPlayerWentInside"]
 [connection signal="playerIndoors" from="Player" to="WolfSpawnManager" method="onPlayerWentInside"]
 [connection signal="playerOutdoors" from="Player" to="WerewolfPS1_animated" method="onPlayerWentOut"]
 [connection signal="playerOutdoors" from="Player" to="WolfSpawnManager" method="onPlayerWentOut"]
 [connection signal="playerRanTooLong" from="Player" to="WolfSpawnManager" method="onPlayerRanTooLong"]
-[connection signal="playerRunning" from="Player" to="WerewolfPS1_animated" method="_on_player_player_running"]
 [connection signal="gunFiredForNoReasonAtAll" from="Player/Head/Arm" to="WerewolfPS1_animated" method="onGunShotForNoFukenReasonAtAll"]
 [connection signal="gunFiredForNoReasonAtAll" from="Player/Head/Arm" to="WolfSpawnManager" method="onGunFiredForNoReasonAtAll"]
 [connection signal="gunReadied" from="Player/Head/Arm" to="WerewolfPS1_animated" method="_on_arm_gun_readied"]
 [connection signal="gunShot" from="Player/Head/Arm" to="WerewolfPS1_animated" method="getShot"]
+[connection signal="attackFinished" from="WerewolfPS1_animated" to="Player" method="attackOver"]
+[connection signal="bitPlayer" from="WerewolfPS1_animated" to="Player" method="emitBlood"]
+[connection signal="wentDormant" from="WerewolfPS1_animated" to="WolfSpawnManager" method="resetTimeSinceWolfRanAway"]
+[connection signal="screen_entered" from="WerewolfPS1_animated/WolfVisibilityCheck" to="Player/Head/Arm" method="onWolfVisibleOnScreen"]
+[connection signal="screen_exited" from="WerewolfPS1_animated/WolfVisibilityCheck" to="Player/Head/Arm" method="onWolfLeftScreen"]
+[connection signal="spawnSignal" from="WolfSpawnManager" to="WerewolfPS1_animated" method="spawnIntoTheWorld"]
 
-[editable path="WerewolfPS1_animated"]
 [editable path="Player"]
 [editable path="Player/Head/shakeable_camera"]
+[editable path="WerewolfPS1_animated"]

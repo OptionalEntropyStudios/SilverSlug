@@ -76,19 +76,23 @@ shadow_mesh = SubResource("ArrayMesh_aroa5")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_gv3po"]
 height = 4.43633
-radius = 0.476543
+radius = 0.48877
 
 [node name="koivu3" type="StaticBody3D"]
 
 [node name="Koivu_002" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.09723)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0.09723)
 mesh = SubResource("ArrayMesh_7ltwk")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0276031, 1.61222, 0.0675172)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0133986, 0.191829, 0.100317)
 shape = SubResource("CylinderShape3D_gv3po")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965145, 0.261718, 0, -0.261718, 0.965145, -0.0276031, 1.57011, -1.23709)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0133986, 0.191829, 0.00234085)
+shape = SubResource("CylinderShape3D_gv3po")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0133986, 0.191829, -0.0968187)
 shape = SubResource("CylinderShape3D_gv3po")

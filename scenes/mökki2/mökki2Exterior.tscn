@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bondxut0a2vks"]
+
+[ext_resource type="PackedScene" uid="uid://73jhf21bmv8b" path="res://Models/mökki/mökki2Exterior.glb" id="1_rgbef"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qyucy"]
+size = Vector3(3.68054, 3.72888, 8.01538)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nt6t6"]
+size = Vector3(1.86765, 3.73035, 1.91406)
+
+[node name="mökki2Exterior" type="StaticBody3D"]
+
+[node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.816711, 1.67096, 0.84314)
+shape = SubResource("BoxShape3D_qyucy")
+
+[node name="collider2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.82808, 1.67023, -0.897736)
+shape = SubResource("BoxShape3D_nt6t6")
+
+[node name="mökki2Exterior2" parent="." instance=ExtResource("1_rgbef")]

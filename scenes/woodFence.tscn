@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ysvfn8rlxko6"]
+
+[ext_resource type="PackedScene" uid="uid://cmtdhtdn6hjvx" path="res://Models/woodFence/woodFence.glb" id="1_m5w8j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m5w8j"]
+size = Vector3(1.03601, 1, 0.192383)
+
+[node name="woodFence" type="StaticBody3D"]
+
+[node name="fenceModel" parent="." instance=ExtResource("1_m5w8j")]
+
+[node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.431702, 0.5, 0)
+shape = SubResource("BoxShape3D_m5w8j")

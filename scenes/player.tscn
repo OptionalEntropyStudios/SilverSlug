@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://0556jvisllh6"]
+[gd_scene load_steps=37 format=3 uid="uid://0556jvisllh6"]
 
 [ext_resource type="Script" uid="uid://cl5tr5fhryids" path="res://Scripts/player.gd" id="1_2agel"]
 [ext_resource type="PackedScene" uid="uid://cdh52c16rteyk" path="res://scenes/shakeable_camera.tscn" id="2_2galg"]
@@ -23,6 +23,35 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w6ifr"]
 
+[sub_resource type="Curve" id="Curve_60mlk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.28839, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_i4ail"]
+curve = SubResource("Curve_60mlk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i4ail"]
+lifetime_randomness = 0.1
+direction = Vector3(0, 0, -1)
+spread = 22.247
+initial_velocity_min = 1.19
+initial_velocity_max = 5.33
+angular_velocity_min = -649.01
+angular_velocity_max = 324.51
+scale_min = 0.2
+scale_curve = SubResource("CurveTexture_i4ail")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a38lo"]
+transparency = 1
+albedo_color = Color(0.886275, 0, 0, 0.517647)
+metallic = 1.0
+metallic_specular = 0.65
+roughness = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_4ni07"]
+material = SubResource("StandardMaterial3D_a38lo")
+size = Vector2(0.1, 0.1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtwwk"]
 vertex_color_use_as_albedo = true
 metallic_specular = 0.0
@@ -31,26 +60,6 @@ billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_acf7e"]
-emission_shape_offset = Vector3(0.305, -0.135, 0)
-spread = 23.313
-flatness = 0.17
-initial_velocity_min = 0.1
-initial_velocity_max = 19.05
-angular_velocity_min = -329.64
-angular_velocity_max = 208.19
-scale_min = 0.2
-scale_over_velocity_min = 484.25
-scale_over_velocity_max = 500.15
-color = Color(0.831373, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_ed6ki"]
-radius = 0.2
-height = 0.4
-radial_segments = 4
-rings = 1
-is_hemisphere = true
 
 [sub_resource type="Curve" id="Curve_ysy8r"]
 _limits = [0.0, 3.0, 0.0, 1.0]
@@ -107,36 +116,27 @@ modulate_color = Color(0.592128, 0.385119, 0.217965, 1)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_2agel")
-lookSensitivity = 7.5
-stepWalkInterval = 0.3
-SPEED = 375.0
+lookSensitivity = 15.0
 
 [node name="Body" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_w6ifr")
 
-[node name="justTheheadPos" type="Node3D" parent="."]
+[node name="justTheheadPos" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="bloodSplatter" type="GPUParticles3D" parent="Head"]
-transform = Transform3D(-4.37113e-08, -7.68703e-16, 0.999996, 0.307721, 0.951473, 1.34509e-08, -0.951474, 0.307721, -4.15902e-08, 0, -0.528896, -1.11759e-08)
-sorting_offset = 13.01
-material_override = SubResource("StandardMaterial3D_vtwwk")
+transform = Transform3D(1, 0, 0, 0, 0.939561, -0.342381, 0, 0.342381, 0.939561, 0, -0.369, -0.445)
 emitting = false
-amount = 373
-lifetime = 2.08
-interp_to_end = 1.0
-speed_scale = 2.64
-explosiveness = 0.08
-randomness = 1.0
-fixed_fps = 60
-visibility_aabb = AABB(0.515, -4, -4, 8, 8, 8)
+amount = 381
+lifetime = 0.64
+one_shot = true
 transform_align = 3
-process_material = SubResource("ParticleProcessMaterial_acf7e")
-draw_pass_1 = SubResource("SphereMesh_ed6ki")
+process_material = SubResource("ParticleProcessMaterial_i4ail")
+draw_pass_1 = SubResource("QuadMesh_4ni07")
 
 [node name="shakeable_camera" parent="Head" groups=["shakeCam"] instance=ExtResource("2_2galg")]
 traumaReductionRate = 0.6
@@ -153,10 +153,9 @@ crosshair = NodePath("../../../CanvasLayer/Crosshair")
 [node name="Arm" type="Node3D" parent="Head" groups=["gun"]]
 transform = Transform3D(1, 0, 0, 0, 0.87855, 0.47765, 0, -0.47765, 0.87855, 0.116, -0.412798, -0.0179862)
 script = ExtResource("3_1t5oc")
-traumaAmount = 0.6
-reloadTime = 3.65
-reloadSoundDelay = 1.4
-gunHoldLimit = 10.0
+equipSpeed = 15.0
+aimSpeed = 14.0
+returnSpeed = 1.0
 
 [node name="shotgun" parent="Head/Arm" instance=ExtResource("2_tk2k1")]
 transform = Transform3D(-0.24, 5.03307e-15, 3.6239e-08, 1.06581e-14, 0.24, 3.72529e-08, -3.6239e-08, 3.72529e-08, -0.24, 0, 0.278327, -0.511932)
@@ -196,8 +195,8 @@ draw_pass_1 = SubResource("QuadMesh_gfpl2")
 [node name="GunReloadSound" type="AudioStreamPlayer3D" parent="Head/Arm/shotgun"]
 transform = Transform3D(-4.16667, 1.42109e-13, -6.29149e-07, 8.03113e-14, 4.16667, 3.57628e-07, 6.29149e-07, 3.57628e-07, -4.16667, -3.27826e-07, -1.1597, -2.13305)
 stream = ExtResource("8_60mlk")
-volume_db = -16.762
-pitch_scale = 0.83
+volume_db = -23.969
+pitch_scale = 0.8
 
 [node name="GunShotSFX" type="AudioStreamPlayer3D" parent="Head/Arm/shotgun"]
 stream = ExtResource("9_2pdu1")
@@ -243,21 +242,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-metadata/_edit_use_anchors_ = true
 
 [node name="XhairHandInteract" type="Sprite2D" parent="CanvasLayer/Crosshair"]
-visible = false
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(11, 25)
+position = Vector2(-6, 9)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("6_0is5s")
 
@@ -265,7 +258,7 @@ texture = ExtResource("6_0is5s")
 z_index = -3
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(18, 18)
+position = Vector2(-1, -1)
 rotation = 0.785398
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("7_qvsh7")
@@ -276,15 +269,14 @@ self_modulate = Color(1, 1, 1, 0.576471)
 z_index = -3
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(18, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("9_1u4ot")
 
 [node name="XhairHandPickup" type="Sprite2D" parent="CanvasLayer/Crosshair"]
 visible = false
 texture_filter = 1
-position = Vector2(-5.36442e-07, 10)
-rotation = 0.530294
+position = Vector2(-24, -16)
+rotation = 0.356047
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("7_t1b5p")
 
@@ -322,7 +314,6 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="GasAmountBar" type="ProgressBar" parent="CanvasLayer"]
-visible = false
 texture_filter = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -351,8 +342,8 @@ texture = ExtResource("11_3u63s")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.806658, 0)
 stream = ExtResource("15_idwkb")
 attenuation_model = 3
-volume_db = -9.143
-pitch_scale = 2.16
+volume_db = -4.367
+pitch_scale = 1.32
 
 [node name="outdoorFootstep" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.174212, 0)
@@ -362,7 +353,7 @@ stream = ExtResource("16_cbbp7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.174212, 0)
 stream = ExtResource("18_60mlk")
 
-[node name="crossPos" type="Node3D" parent="."]
+[node name="crossPos" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0063982, 0)
 
 [node name="gasCanSound" type="AudioStreamPlayer" parent="."]
@@ -375,5 +366,54 @@ stream = ExtResource("19_nstt4")
 volume_db = -9.532
 pitch_scale = 0.72
 max_polyphony = 10
+
+[node name="zigZagTargets" type="Node3D" parent="." groups=["zigZagTargets"]]
+
+[node name="zigZagTarget" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 7.57651, 0, -14.2445)
+
+[node name="zigZagTarget2" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -12.9961, 0, -21.0255)
+
+[node name="zigZagTarget3" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 37.7295, 0, -24.2595)
+
+[node name="zigZagTarget4" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 46.2005, 0, -6.31594)
+
+[node name="zigZagTarget5" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -39.3169, 0, -8.29808)
+
+[node name="zigZagTarget6" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -26.5094, 0, 9.22821)
+
+[node name="zigZagTarget7" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 33.8973, 0, 15.5919)
+
+[node name="zigZagTarget8" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 11.7112, 0, 17.0524)
+
+[node name="zigZagTarget9" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -16.4248, 0, 23.6248)
+
+[node name="zigZagTarget10" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 22.8042, 0, -35.4221)
+
+[node name="zigZagTarget11" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -16.6265, 0, -42.3074)
+
+[node name="zigZagTarget12" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, 30.4223, 0, 30.368)
+
+[node name="zigZagTarget13" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -0.996498, 0, 43.8515)
+
+[node name="zigZagTarget14" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -47.7754, 0, 15.757)
+
+[node name="zigZagTarget15" type="Marker3D" parent="zigZagTargets"]
+transform = Transform3D(3.60354, 0, 0, 0, 1, 0, 0, 0, 3.72779, -40.2294, 0, -27.9576)
+
+[connection signal="finished" from="Head/Arm/shotgun/GunReloadSound" to="Head/Arm" method="gunFinishedReloading"]
 
 [editable path="Head/shakeable_camera"]

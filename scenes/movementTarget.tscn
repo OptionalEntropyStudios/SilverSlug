@@ -1,3 +1,4 @@
 [gd_scene format=3 uid="uid://pntf0u8ybn1b"]
 
-[node name="WolfMovementTarget" type="Node3D" groups=["movementTarget"]]
+[node name="WolfMovementTarget" type="Marker3D" groups=["movementTarget"]]
+gizmo_extents = 1.0

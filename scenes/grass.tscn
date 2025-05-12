@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=4 uid="uid://3cd03vig8qfj"]
+
+[ext_resource type="PackedScene" uid="uid://c5r20cs6bwwhv" path="res://scenes/shrubbery.tscn" id="1_e1kak"]
+[ext_resource type="Texture2D" uid="uid://jwy14mjsea6r" path="res://Models/shrub_bushSilhouette512x512.png" id="2_yarb5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3kunl"]
+resource_name = "shrub"
+transparency = 4
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.494118, 0.470588, 0.243137, 0.682353)
+albedo_texture = ExtResource("2_yarb5")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7w7y6"]
+_surfaces = [{
+"aabb": AABB(-2.60152, -1.06372, -2.49402, 5.52842, 5.94075, 4.83684),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0A"),
+"name": "shrub",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("9PhgKsKiAAC8H3Lx380AALwfYCrCogAA9Phy8d/NAABbfmAqqAcAABHKcvFT9AAA8qRgKvz7AAB5o3LxAAAAAAAA30FDjgAA//8fvlgWAACewwAA1EYAAGA8///HXQAAuG5gKrP5AACvKXLxYQoAAABPYCoVBAAAZ0ly8f//AAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_u68v2"]
+resource_name = "shrub_Plane"
+_surfaces = [{
+"aabb": AABB(-2.60152, -1.06372, -2.49402, 5.52842, 5.94075, 4.83684),
+"attribute_data": PackedByteArray("AAD/////AAD/////AAAAAAAA/////wAA/////wAAAAAAAP////8AAP////8AAAAAAAD/////AAD/////AAAAAA=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0A"),
+"material": SubResource("StandardMaterial3D_3kunl"),
+"name": "shrub",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("9PhgKsKi//+8H3Lx383//7wfYCrCov//9Phy8d/N//9bfmAqqAcWuRHKcvFT9Ba58qRgKvz7Frl5o3LxAAAWuQAA30FDjliT//8fvlgWWJOewwAA1EZYk2A8///HXViTuG5gKrP5PMavKXLxYQo8xgBPYCoVBDzGZ0ly8f//PMb/f7P1/3+z9f9/s/X/f7P1PItd6zyLXes8i13rPItd65GYg0uRmINLkZiDS5GYg0vvkU8I75FPCO+RTwjvkU8I")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_7w7y6")
+
+[node name="grass" instance=ExtResource("1_e1kak")]
+
+[node name="bush" parent="shrub" index="0"]
+mesh = SubResource("ArrayMesh_u68v2")

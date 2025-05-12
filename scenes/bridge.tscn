@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://e56erbunhra1"]
+
+[ext_resource type="PackedScene" uid="uid://cpac1wfntxnb" path="res://Models/bridge/bridge.glb" id="1_7ct4w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_im2sa"]
+size = Vector3(2.5, 0.25, 3.51367)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ct4w"]
+size = Vector3(2.5, 0.25, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1q54l"]
+size = Vector3(0.186646, 1.25, 4.06061)
+
+[node name="bridge" type="StaticBody3D"]
+
+[node name="mesh" parent="." instance=ExtResource("1_7ct4w")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+
+[node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.0489995, -0.620605)
+shape = SubResource("BoxShape3D_im2sa")
+
+[node name="collider2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.15911, -0.310583, 0, 0.310583, 1.15911, 0, -0.261442, 2.60493)
+shape = SubResource("BoxShape3D_7ct4w")
+
+[node name="collider3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.43463, 0.599, -0.347137)
+shape = SubResource("BoxShape3D_1q54l")
+
+[node name="collider4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -1.3811, 0.60694, -0.347137)
+shape = SubResource("BoxShape3D_1q54l")

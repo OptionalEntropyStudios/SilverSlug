@@ -48,14 +48,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h5d15")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t34p5"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ma007"]
 points = PackedVector3Array(0.817177, 0.243975, -0.398801, -0.53044, 0.243975, 1.57042, 0.67147, -0.549864, 0.980915, -0.596119, -0.553171, 0.987529, 0.671987, -0.550301, -1.15819, 0.423185, 0.464309, 0.870182, -0.598618, -0.555286, -1.16815, -0.737918, 0.243975, -0.502717, 0.557944, 0.0366793, -1.6432, 0.63408, -0.213131, 1.49701, -0.372968, 0.443381, -0.22538, 0.557944, 0.243975, 1.57042, -0.46209, -0.366296, -1.69401, -0.500228, -0.358684, 1.48251, 0.461087, 0.453228, -0.181665, -0.394824, 0.467669, 0.828803, -0.478685, 0.0366793, -1.6432, 0.539283, -0.36485, -1.6874, -0.5903, -0.0151166, 1.41399, 0.671793, -0.306927, -1.49852, 0.143292, 0.0366793, -1.69516, 0.627972, -0.407182, 1.38242, 0.133679, 0.502209, 0.334732, -0.582348, 0.0366793, -1.53929, 0.670437, -0.2091, 1.41609, -0.641601, -0.404229, 0.592718, -0.591702, -0.40351, -1.49666, 0.661607, 0.0366793, -1.48765, 0.662689, 0.128687, 1.20571, 0.0875754, 0.46503, 0.920057, 0.467505, 0.46036, 0.814918, -0.588812, -0.305209, 1.41044)
 
 [node name="GIGACorollaPS1" type="StaticBody3D"]
 
 [node name="Corolla" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 mesh = SubResource("ArrayMesh_sblnr")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_t34p5")
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_ma007")

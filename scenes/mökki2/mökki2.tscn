@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bychaitxlmdnt"]
+
+[ext_resource type="PackedScene" uid="uid://bondxut0a2vks" path="res://scenes/mökki2/mökki2Exterior.tscn" id="1_er0lv"]
+[ext_resource type="PackedScene" uid="uid://lyiytg6i1v85" path="res://scenes/door_trigger.tscn" id="2_ufs0h"]
+[ext_resource type="PackedScene" uid="uid://b8qiy72pigpjs" path="res://scenes/mökki2/mökki2Interior.tscn" id="3_r8sx0"]
+
+[node name="Mökki1" type="Node3D"]
+
+[node name="mökki2Exterior" parent="." instance=ExtResource("1_er0lv")]
+
+[node name="DoorTrigger" parent="mökki2Exterior" node_paths=PackedStringArray("targetPosition") instance=ExtResource("2_ufs0h")]
+transform = Transform3D(-3.36578e-08, 0, -0.902, 0, 0.902, 0, 0.77, 0, -3.94277e-08, -2.64825, -0.0322615, -0.918194)
+targetPosition = NodePath("../../mökki2Interior/EnterPosition")
+
+[node name="ExitPosition" type="Node3D" parent="mökki2Exterior"]
+transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, -3.52304, 0.135117, -0.917539)
+
+[node name="mökki2Interior" parent="." instance=ExtResource("3_r8sx0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, 0)
+
+[node name="DoorTrigger" parent="mökki2Interior" node_paths=PackedStringArray("targetPosition") instance=ExtResource("2_ufs0h")]
+transform = Transform3D(-2.83687e-08, 0, 0.891, 0, 0.891, 0, -0.649, 0, -3.89468e-08, -2.70167, -0.0524864, -0.89606)
+targetPosition = NodePath("../../mökki2Exterior/ExitPosition")
+
+[node name="EnterPosition" type="Node3D" parent="mökki2Interior"]
+transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, -2.08767, 0.205521, -0.901518)
